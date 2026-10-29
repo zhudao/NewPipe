@@ -24,8 +24,11 @@ public final class ChannelTabHelper {
         switch (tab) {
             case ChannelTabs.VIDEOS:
             case ChannelTabs.TRACKS:
+            case ChannelTabs.LIKES:
             case ChannelTabs.SHORTS:
             case ChannelTabs.LIVESTREAMS:
+            case ChannelTabs.PODCASTS:
+            case ChannelTabs.COURSES:
                 return true;
             default:
                 return false;
@@ -62,6 +65,12 @@ public final class ChannelTabHelper {
                 return R.string.show_channel_tabs_playlists;
             case ChannelTabs.ALBUMS:
                 return R.string.show_channel_tabs_albums;
+            case ChannelTabs.LIKES:
+                return R.string.show_channel_tabs_likes;
+            case ChannelTabs.PODCASTS:
+                return R.string.show_channel_tabs_podcasts;
+            case ChannelTabs.COURSES:
+                return R.string.show_channel_tabs_courses;
             default:
                 return -1;
         }
@@ -78,6 +87,12 @@ public final class ChannelTabHelper {
                 return R.string.fetch_channel_tabs_shorts;
             case ChannelTabs.LIVESTREAMS:
                 return R.string.fetch_channel_tabs_livestreams;
+            case ChannelTabs.LIKES:
+                return R.string.fetch_channel_tabs_likes;
+            case ChannelTabs.PODCASTS:
+                return R.string.fetch_channel_tabs_podcasts;
+            case ChannelTabs.COURSES:
+                return R.string.fetch_channel_tabs_courses;
             default:
                 return -1;
         }
@@ -100,6 +115,12 @@ public final class ChannelTabHelper {
                 return R.string.channel_tab_playlists;
             case ChannelTabs.ALBUMS:
                 return R.string.channel_tab_albums;
+            case ChannelTabs.LIKES:
+                return R.string.channel_tab_likes;
+            case ChannelTabs.PODCASTS:
+                return R.string.channel_tab_podcasts;
+            case ChannelTabs.COURSES:
+                return R.string.channel_tab_courses;
             default:
                 return R.string.unknown_content;
         }

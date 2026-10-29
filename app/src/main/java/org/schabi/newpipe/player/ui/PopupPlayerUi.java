@@ -40,6 +40,7 @@ import org.schabi.newpipe.player.Player;
 import org.schabi.newpipe.player.gesture.BasePlayerGestureListener;
 import org.schabi.newpipe.player.gesture.PopupPlayerGestureListener;
 import org.schabi.newpipe.player.helper.PlayerHelper;
+import org.schabi.newpipe.util.DeviceUtils;
 
 public final class PopupPlayerUi extends VideoPlayerUi {
     private static final String TAG = PopupPlayerUi.class.getSimpleName();
@@ -152,6 +153,14 @@ public final class PopupPlayerUi extends VideoPlayerUi {
     }
 
     @Override
+    public void initPlayback() {
+        super.initPlayback();
+        // Make sure video and text tracks are enabled if the screen is turned on (which should
+        // always be the case), in the case user switched from background player to popup player
+        player.useVideoAndSubtitles(player.isScreenOn());
+    }
+
+    @Override
     protected void setupElementsVisibility() {
         binding.fullScreenButton.setVisibility(View.VISIBLE);
         binding.screenRotationButton.setVisibility(View.GONE);
@@ -174,6 +183,8 @@ public final class PopupPlayerUi extends VideoPlayerUi {
         binding.topControls.setClickable(false);
         binding.topControls.setFocusable(false);
         binding.bottomControls.bringToFront();
+        // Workaround that UI elements are pushed off screen
+        binding.audioTrackTextView.setMaxWidth(DeviceUtils.dpToPx(48, context));
         super.setupElementsVisibility();
     }
 
@@ -216,10 +227,10 @@ public final class PopupPlayerUi extends VideoPlayerUi {
         } else if (player.isPlaying() || player.isLoading()) {
             if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
                 // Use only audio source when screen turns off while popup player is playing
-                player.useVideoSource(false);
+                player.useVideoAndSubtitles(false);
             } else if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
                 // Restore video source when screen turns on and user was watching video in popup
-                player.useVideoSource(true);
+                player.useVideoAndSubtitles(true);
             }
         }
     }
@@ -232,7 +243,7 @@ public final class PopupPlayerUi extends VideoPlayerUi {
     //region Popup position and size
 
     /**
-     * Check if {@link #popupLayoutParams}' position is within a arbitrary boundary
+     * Check if {@link #popupLayoutParams}' position is within an arbitrary boundary
      * that goes from (0, 0) to (screenWidth, screenHeight).
      * <p>
      * If it's out of these boundaries, {@link #popupLayoutParams}' position is changed
@@ -382,7 +393,7 @@ public final class PopupPlayerUi extends VideoPlayerUi {
                     private void end() {
                         windowManager.removeView(closeOverlayBinding.getRoot());
                         closeOverlayBinding = null;
-                        player.getService().stopService();
+                        player.getService().destroyPlayerAndStopService();
                     }
                 }).start();
     }

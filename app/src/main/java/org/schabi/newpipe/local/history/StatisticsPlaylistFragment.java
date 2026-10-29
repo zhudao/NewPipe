@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.viewbinding.ViewBinding;
 
 import com.evernote.android.state.State;
 import com.google.android.material.snackbar.Snackbar;
@@ -45,6 +44,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -102,7 +102,7 @@ public class StatisticsPlaylistFragment
     public void onResume() {
         super.onResume();
         if (activity != null) {
-            setTitle(activity.getString(R.string.title_activity_history));
+            displaySortMode(sortMode);
         }
     }
 
@@ -126,12 +126,12 @@ public class StatisticsPlaylistFragment
     }
 
     @Override
-    protected ViewBinding getListHeader() {
+    protected Supplier<View> getListHeaderSupplier() {
         headerBinding = StatisticPlaylistControlBinding.inflate(activity.getLayoutInflater(),
                 itemsList, false);
         playlistControlBinding = headerBinding.playlistControl;
 
-        return headerBinding;
+        return headerBinding::getRoot;
     }
 
     @Override
@@ -384,9 +384,24 @@ public class StatisticsPlaylistFragment
         return new SinglePlayQueue(streamInfoItems, index);
     }
 
+    private void displaySortMode(final StatisticSortMode mode) {
+        final int resourceIdOfSortMode = mode.getResourceId();
+        setTitle(getString(resourceIdOfSortMode));
+    }
+
     private enum StatisticSortMode {
-        LAST_PLAYED,
-        MOST_PLAYED,
+        LAST_PLAYED(R.string.title_last_played),
+        MOST_PLAYED(R.string.title_most_played);
+
+        private final int resourceId;
+
+        StatisticSortMode(final int theResourceId) {
+            this.resourceId = theResourceId;
+        }
+
+        int getResourceId() {
+            return resourceId;
+        }
     }
 }
 

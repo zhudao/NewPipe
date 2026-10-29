@@ -2,7 +2,6 @@ package org.schabi.newpipe.player;
 
 import static org.schabi.newpipe.QueueItemMenuUtil.openPopupMenu;
 import static org.schabi.newpipe.player.helper.PlayerHelper.formatSpeed;
-import static org.schabi.newpipe.util.Localization.assureCorrectAppLanguage;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -84,7 +83,6 @@ public final class PlayQueueActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        assureCorrectAppLanguage(this);
         super.onCreate(savedInstanceState);
         ThemeHelper.setTheme(this, ServiceHelper.getSelectedServiceId(this));
 
@@ -129,39 +127,39 @@ public final class PlayQueueActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.action_settings:
-                NavigationHelper.openSettings(this);
-                return true;
-            case R.id.action_append_playlist:
-                PlaylistDialog.showForPlayQueue(player, getSupportFragmentManager());
-                return true;
-            case R.id.action_playback_speed:
-                openPlaybackParameterDialog();
-                return true;
-            case R.id.action_mute:
-                player.toggleMute();
-                return true;
-            case R.id.action_system_audio:
-                startActivity(new Intent(Settings.ACTION_SOUND_SETTINGS));
-                return true;
-            case R.id.action_switch_main:
+        final int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            finish();
+            return true;
+        } else if (itemId == R.id.action_settings) {
+            NavigationHelper.openSettings(this);
+            return true;
+        } else if (itemId == R.id.action_append_playlist) {
+            PlaylistDialog.showForPlayQueue(player, getSupportFragmentManager());
+            return true;
+        } else if (itemId == R.id.action_playback_speed) {
+            openPlaybackParameterDialog();
+            return true;
+        } else if (itemId == R.id.action_mute) {
+            player.toggleMute();
+            return true;
+        } else if (itemId == R.id.action_system_audio) {
+            startActivity(new Intent(Settings.ACTION_SOUND_SETTINGS));
+            return true;
+        } else if (itemId == R.id.action_switch_main) {
+            this.player.setRecovery();
+            NavigationHelper.playOnMainPlayer(this, player.getPlayQueue(), true);
+            return true;
+        } else if (itemId == R.id.action_switch_popup) {
+            if (PermissionHelper.isPopupEnabledElseAsk(this)) {
                 this.player.setRecovery();
-                NavigationHelper.playOnMainPlayer(this, player.getPlayQueue(), true);
-                return true;
-            case R.id.action_switch_popup:
-                if (PermissionHelper.isPopupEnabledElseAsk(this)) {
-                    this.player.setRecovery();
-                    NavigationHelper.playOnPopupPlayer(this, player.getPlayQueue(), true);
-                }
-                return true;
-            case R.id.action_switch_background:
-                this.player.setRecovery();
-                NavigationHelper.playOnBackgroundPlayer(this, player.getPlayQueue(), true);
-                return true;
+                NavigationHelper.playOnPopupPlayer(this, player.getPlayQueue(), true);
+            }
+            return true;
+        } else if (itemId == R.id.action_switch_background) {
+            this.player.setRecovery();
+            NavigationHelper.playOnBackgroundPlayer(this, player.getPlayQueue(), true);
+            return true;
         }
 
         if (item.getGroupId() == MENU_ID_AUDIO_TRACK) {
@@ -183,7 +181,10 @@ public final class PlayQueueActivity extends AppCompatActivity
     ////////////////////////////////////////////////////////////////////////////
 
     private void bind() {
+        // Note: this code should not really exist, and PlayerHolder should be used instead, but
+        // it will be rewritten when NewPlayer will replace the current player.
         final Intent bindIntent = new Intent(this, PlayerService.class);
+        bindIntent.setAction(PlayerService.BIND_PLAYER_HOLDER_ACTION);
         final boolean success = bindService(bindIntent, serviceConnection, BIND_AUTO_CREATE);
         if (!success) {
             unbindService(serviceConnection);
@@ -221,7 +222,7 @@ public final class PlayQueueActivity extends AppCompatActivity
                 Log.d(TAG, "Player service is connected");
 
                 if (service instanceof PlayerService.LocalBinder) {
-                    player = ((PlayerService.LocalBinder) service).getPlayer();
+                    player = ((PlayerService.LocalBinder) service).getService().getPlayer();
                 }
 
                 if (player == null || player.getPlayQueue() == null || player.exoPlayerIsNull()) {
@@ -365,6 +366,39 @@ public final class PlayQueueActivity extends AppCompatActivity
         }
     }
 
+    private void updateQueueTime(final int currentProgress) {
+        if (player == null || player.getPlayQueue() == null) {
+            queueControlBinding.queueTotalDuration.setVisibility(View.GONE);
+            return;
+        }
+
+        final PlayQueue playQueue = player.getPlayQueue();
+        final List<PlayQueueItem> streams = playQueue.getStreams();
+        final int currentIndex = playQueue.getIndex();
+
+        if (streams.isEmpty() || currentIndex < 0 || currentIndex >= streams.size()) {
+            queueControlBinding.queueTotalDuration.setVisibility(View.GONE);
+            return;
+        }
+
+        final long before = streams.subList(0, currentIndex).stream()
+                .mapToLong(PlayQueueItem::getDuration)
+                .sum();
+
+        final long total = streams.stream()
+                .mapToLong(PlayQueueItem::getDuration)
+                .sum();
+
+        final long queueProgress = before + currentProgress / 1000L;
+
+        queueControlBinding.queueTotalDuration.setText(
+                Localization.getDurationString(queueProgress) + " / "
+                        + Localization.getDurationString(total)
+        );
+
+        queueControlBinding.queueTotalDuration.setVisibility(View.VISIBLE);
+    }
+
     ////////////////////////////////////////////////////////////////////////////
     // Component On-Click Listener
     ////////////////////////////////////////////////////////////////////////////
@@ -497,6 +531,7 @@ public final class PlayQueueActivity extends AppCompatActivity
                 queueControlBinding.currentTime.getLayoutParams();
         currentTimeParams.width = queueControlBinding.endTime.getWidth();
         queueControlBinding.currentTime.setLayoutParams(currentTimeParams);
+        updateQueueTime(currentProgress);
     }
 
     @Override

@@ -1,11 +1,11 @@
 package org.schabi.newpipe.database
 
-import androidx.room.TypeConverter
-import org.schabi.newpipe.extractor.stream.StreamType
-import org.schabi.newpipe.local.subscription.FeedGroupIcon
+import androidx.room3.ColumnTypeConverter
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
+import org.schabi.newpipe.extractor.stream.StreamType
+import org.schabi.newpipe.local.subscription.FeedGroupIcon
 
 class Converters {
     /**
@@ -14,7 +14,7 @@ class Converters {
      * @param value the long value
      * @return the `OffsetDateTime`
      */
-    @TypeConverter
+    @ColumnTypeConverter
     fun offsetDateTimeFromTimestamp(value: Long?): OffsetDateTime? {
         return value?.let { OffsetDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC) }
     }
@@ -25,27 +25,27 @@ class Converters {
      * @param offsetDateTime the `OffsetDateTime`
      * @return the long value
      */
-    @TypeConverter
+    @ColumnTypeConverter
     fun offsetDateTimeToTimestamp(offsetDateTime: OffsetDateTime?): Long? {
         return offsetDateTime?.withOffsetSameInstant(ZoneOffset.UTC)?.toInstant()?.toEpochMilli()
     }
 
-    @TypeConverter
+    @ColumnTypeConverter
     fun streamTypeOf(value: String): StreamType {
         return StreamType.valueOf(value)
     }
 
-    @TypeConverter
+    @ColumnTypeConverter
     fun stringOf(streamType: StreamType): String {
         return streamType.name
     }
 
-    @TypeConverter
+    @ColumnTypeConverter
     fun integerOf(feedGroupIcon: FeedGroupIcon): Int {
         return feedGroupIcon.id
     }
 
-    @TypeConverter
+    @ColumnTypeConverter
     fun feedGroupIconOf(id: Int): FeedGroupIcon {
         return FeedGroupIcon.entries.first { it.id == id }
     }

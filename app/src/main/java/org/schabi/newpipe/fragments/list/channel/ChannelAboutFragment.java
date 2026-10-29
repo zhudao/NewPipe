@@ -40,10 +40,10 @@ public class ChannelAboutFragment extends BaseDescriptionFragment {
         binding.constraintLayout.setPadding(0, DeviceUtils.dpToPx(8, requireContext()), 0, 0);
     }
 
-    @Nullable
+    @NonNull
     @Override
     protected Description getDescription() {
-        return new Description(channelInfo.getDescription(), Description.PLAIN_TEXT);
+        return Description.of(channelInfo.getDescription(), Description.Type.PLAIN_TEXT);
     }
 
     @NonNull
@@ -81,9 +81,7 @@ public class ChannelAboutFragment extends BaseDescriptionFragment {
 
         if (channelInfo.getSubscriberCount() != UNKNOWN_SUBSCRIBER_COUNT) {
             addMetadataItem(inflater, layout, false, R.string.metadata_subscribers,
-                    Localization.localizeNumber(
-                            requireContext(),
-                            channelInfo.getSubscriberCount()));
+                    Localization.localizeNumber(channelInfo.getSubscriberCount()));
         }
 
         addImagesMetadataItem(inflater, layout, R.string.metadata_avatars,

@@ -1,9 +1,9 @@
 package org.schabi.newpipe.database.feed.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
+import androidx.room3.ColumnInfo
+import androidx.room3.Entity
+import androidx.room3.ForeignKey
+import androidx.room3.Index
 import org.schabi.newpipe.database.feed.model.FeedGroupSubscriptionEntity.Companion.FEED_GROUP_SUBSCRIPTION_TABLE
 import org.schabi.newpipe.database.feed.model.FeedGroupSubscriptionEntity.Companion.GROUP_ID
 import org.schabi.newpipe.database.feed.model.FeedGroupSubscriptionEntity.Companion.SUBSCRIPTION_ID
@@ -18,14 +18,18 @@ import org.schabi.newpipe.database.subscription.SubscriptionEntity
             entity = FeedGroupEntity::class,
             parentColumns = [FeedGroupEntity.ID],
             childColumns = [GROUP_ID],
-            onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE, deferred = true
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE,
+            deferred = true
         ),
 
         ForeignKey(
             entity = SubscriptionEntity::class,
             parentColumns = [SubscriptionEntity.SUBSCRIPTION_UID],
             childColumns = [SUBSCRIPTION_ID],
-            onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE, deferred = true
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE,
+            deferred = true
         )
     ]
 )

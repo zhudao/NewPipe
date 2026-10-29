@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="upload_date_text">Δημοσιεύθηκε στις %1$s</string>
-    <string name="no_player_found">Δε βρέθηκε πρόγραμμα αναπαραγωγής. Εγκατάσταση του VLC;</string>
+    <string name="no_player_found">Δε βρέθηκε αναπαραγωγός ροής δεδομένων. Εγκατάσταση του VLC;</string>
     <string name="install">Εγκατάσταση</string>
-    <string name="cancel">Άκυρο</string>
-    <string name="open_in_browser">Άνοιγμα σε πρόγραμμα περιήγησης</string>
+    <string name="cancel">Ακύρωση</string>
+    <string name="open_in_browser">Άνοιγμα στον περιηγητή</string>
     <string name="share">Κοινοποίηση</string>
-    <string name="download">Λήψη</string>
+    <string name="download">Λήξη</string>
     <string name="search">Αναζήτηση</string>
     <string name="settings">Ρυθμίσεις</string>
     <string name="did_you_mean">Μήπως εννοείτε \"%1$s\";</string>
@@ -27,8 +27,8 @@
     <string name="play_audio">Ήχος</string>
     <string name="default_audio_format_title">Προεπιλεγμένη μορφή ήχου</string>
     <string name="theme_title">Θέμα</string>
-    <string name="dark_theme_title">Σκοτεινό</string>
-    <string name="light_theme_title">Φωτεινό</string>
+    <string name="dark_theme_title">Σκοτεινή</string>
+    <string name="light_theme_title">Φωτεινή</string>
     <string name="download_dialog_title">Λήψη</string>
     <string name="show_next_and_similar_title">Εμφάνιση «Επόμενου» και «Σχετικών» βίντεο</string>
     <string name="unsupported_url">Δεν υποστηρίζεται η διεύθυνση URL</string>
@@ -41,7 +41,6 @@
     <string name="detail_uploader_thumbnail_view_description">Μικρογραφία εικόνας προφίλ του χρήστη</string>
     <string name="detail_likes_img_view_description">Like</string>
     <string name="detail_dislikes_img_view_description">Dislike</string>
-    <string name="short_billion">δισ/ρια</string>
     <string name="open_in_popup_mode">Άνοιγμα σε αναδυόμενο παράθυρο</string>
     <string name="subscribe_button_title">Εγγραφή</string>
     <string name="subscribed_button_title">Εγγεγραμμένος</string>
@@ -64,14 +63,14 @@
     <string name="delete">Διαγραφή</string>
     <string name="msg_error">Σφάλμα</string>
     <string name="msg_running_detail">Πατήστε για λεπτομέρειες</string>
-    <string name="settings_category_downloads_title">Λήψη</string>
+    <string name="settings_category_downloads_title">Κατεβάσματα</string>
     <string name="charset_letters_and_digits">Γράμματα και ψηφία</string>
     <string name="tab_licenses">Άδειες</string>
     <string name="title_activity_history">Ιστορικό</string>
     <string name="action_history">Ιστορικό</string>
     <string name="show_info">Εμφάνιση πληροφοριών</string>
     <string name="main_bg_subtitle">Πατήστε το μεγεθυντικό φακό για να ξεκινήσετε.</string>
-    <string name="no_player_found_toast">Δε βρέθηκε πρόγραμμα αναπαραγωγής ροής δεδομένων (μπορείτε να εγκαταστήσετε το VLC για να κάνετε αναπαραγωγή).</string>
+    <string name="no_player_found_toast">Δε βρέθηκε αναπαραγωγός ροής δεδομένων (μπορείτε να εγκαταστήσετε το VLC για να κάνετε αναπαραγωγή).</string>
     <string name="controls_download_desc">Λήψη του αρχείου ροής</string>
     <string name="use_external_video_player_summary">Αφαιρείται ο ήχος από κάποιες αναλύσεις</string>
     <string name="channel_unsubscribed">Το κανάλι διαγράφηκε</string>
@@ -103,7 +102,7 @@
     <string name="resume_on_audio_focus_gain_title">Ανάκτηση αναπαραγωγής</string>
     <string name="resume_on_audio_focus_gain_summary">Συνέχιση της αναπαραγωγής έπειτα από διακοπές (π.χ. κλήσεις)</string>
     <string name="show_hold_to_append_title">Εμφάνιση επεξήγησης του «Πιέστε παρατεταμένα για προσθήκη στην ουρά»</string>
-    <string name="show_hold_to_append_summary">Εμφάνιση υπόδειξης όταν πατηθεί το κουμπί παρασκηνίου ή αναδυόμενου παραθύρου στις \"Λεπτομέρειες:\\ στο βίντεο</string>
+    <string name="show_hold_to_append_summary">Εμφάνιση συμβουλής κατά το πάτημα του φόντου ή του αναδυόμενου κουμπιού στο βίντεο «Λεπτομέρειες:»</string>
     <string name="default_content_country_title">Προεπιλεγμένη χώρα περιεχομένου</string>
     <string name="settings_category_player_title">Αναπαραγωγός</string>
     <string name="settings_category_player_behavior_title">Συμπεριφορά</string>
@@ -164,13 +163,11 @@
     <string name="sorry_string">Λυπούμαστε, αυτό δεν έπρεπε να έχει συμβεί.</string>
     <string name="error_report_button_text">Αναφορά μέσω ηλεκτρονικού ταχυδρομείου</string>
     <string name="error_snackbar_message">Συγγνώμη, κάτι πήγε στραβά.</string>
-    <string name="info_labels">Τι:\\nΑίτημα:\\nΓλώσσα περιεχομένου:\\nΧώρα περιεχομένου:\\nΓλώσσα εφαρμογής:\\nΥπηρεσία:\\nΏρα GMT:\\nΠακέτο:\\nΈκδοση:\\nΈκδοση λειτουργικού συστήματος:</string>
+    <string name="info_labels">Τι:\nΑίτημα:\nΓλώσσα περιεχομένου:\nΧώρα περιεχομένου:\nΓλώσσα εφαρμογής:\nΥπηρεσία:\nΏρα GMT:\nΠακέτο:\nΈκδοση:\nΈκδοση λειτουργικού συστήματος:</string>
     <string name="search_no_results">Κανένα αποτέλεσμα</string>
     <string name="empty_list_subtitle">Δεν υπάρχει τίποτα εδώ</string>
     <string name="detail_drag_description">Σύρετε για ταξινόμηση</string>
     <string name="retry">Προσπάθεια εκ νέου</string>
-    <string name="short_thousand">χιλ.</string>
-    <string name="short_million">εκ/ρια</string>
     <string name="no_subscribers">Κανένας συνδρομητής</string>
     <plurals name="subscribers">
         <item quantity="one">%s συνδρομητής</item>
@@ -184,7 +181,7 @@
     <string name="no_videos">Κανένα βίντεο</string>
     <plurals name="videos">
         <item quantity="one">%s βίντεο</item>
-        <item quantity="other">%s βίντεο</item>
+        <item quantity="other">%s βίντεο(πολλά)</item>
     </plurals>
     <string name="start">Εκκίνηση</string>
     <string name="create">Δημιουργία</string>
@@ -198,8 +195,7 @@
     <string name="msg_wait">Παρακαλώ περιμένετε…</string>
     <string name="msg_copied">Αντιγράφηκε στο πρόχειρο</string>
     <string name="no_available_dir">Παρακαλώ ορίστε έναν φάκελο λήψεων αργότερα στις ρυθμίσεις</string>
-    <string name="msg_popup_permission">Αυτή η άδεια είναι απαραίτητη για
-\nτο άνοιγμα αναδυόμενων παραθύρων</string>
+    <string name="msg_popup_permission">Αυτή η άδεια είναι απαραίτητη για \nτο άνοιγμα αναδυόμενων παραθύρων</string>
     <string name="one_item_deleted">1 αντικείμενο διαγράφηκε.</string>
     <string name="title_activity_recaptcha">Δοκιμασία reCAPTCHA</string>
     <string name="recaptcha_request_toast">Ζητήθηκε δοκιμασία reCAPTCHA</string>
@@ -208,21 +204,20 @@
     <string name="settings_file_replacement_character_title">Αντικαταστάτης χαρακτήρας</string>
     <string name="charset_most_special_characters">Οι περισσότεροι ειδικοί χαρακτήρες</string>
     <string name="title_activity_about">Σχετικά με το NewPipe</string>
-    <string name="title_licenses">Άδειες Τρίτων</string>
+    <string name="title_licenses">Άδειες τρίτων κατασκευαστών</string>
     <string name="copyright" formatted="true">© %1$s από %2$s υπό %3$s</string>
-    <string name="tab_about">Πληροφορίες &amp; Συχνές Ερωτήσεις</string>
-    <string name="app_description">Ανοιχτού κώδικα, ελαφριά εφαρμογή Android, για την αναπαραγωγή πολυμέσων από το διαδίκτυο.</string>
-    <string name="contribution_title">Συνεισφέρετε</string>
+    <string name="tab_about">Πληροφορίες και συχνές ερωτήσεις</string>
+    <string name="app_description">Ανοιχτού κώδικα, ελαφριά εφαρμογή Android, για την αναπαραγωγή πολυμεσων από το διαδίκτυο.</string>
+    <string name="contribution_title">Συνεισφορά</string>
     <string name="contribution_encouragement">Αν έχετε ιδέες για μετάφραση, αλλαγή σχεδιασμού, εκκαθάριση ή ριζικές αλλαγές κώδικα της εφαρμογής, η βοήθεια σας είναι πάντα ευπρόσδεκτη. Όσο περισσότερη έχουμε, τόσο καλύτεροι γινόμαστε!</string>
     <string name="view_on_github">Δείτε το στο GitHub</string>
-    <string name="donation_title">Δωρεά</string>
+    <string name="donation_title">Κάνε δωρεά</string>
     <string name="donation_encouragement">Το NewPipe αναπτύσσεται από εθελοντές που δαπανούν τον ελεύθερο χρόνο τους για να σας προσφέρουν τη βέλτιστη δυνατή εμπειρία χρήστη. Ανταποδώστε το, για να βοηθήσετε τους προγραμματιστές του NewPipe να το κάνουν ακόμα καλύτερο, όσο απολαμβάνουν ένα φλιτζάνι καφέ.</string>
     <string name="give_back">Προσφέρετε</string>
-    <string name="website_title">Ιστότοπος</string>
+    <string name="website_title">Ιστοτόπος</string>
     <string name="website_encouragement">Επισκευτείτε τον ιστότοπο του NewPipe για περισσότερες πληροφορίες και νέα.</string>
     <string name="privacy_policy_title">Πολιτική ιδιωτικού απόρρητου του NewPipe</string>
-    <string name="privacy_policy_encouragement">Το NewPipe παίρνει πολύ σοβαρά την ιδιωτικότητα σας. Έτσι, η εφαρμογή αυτή δεν συλλέγει δεδομένα από εσάς χωρίς τη συγκατάθεσή σας.
-\nΗ πολιτική ιδιωτικού απόρρητου του NewPipe εξηγεί λεπτομερώς ποια δεδομένα αποστέλλονται και αποθηκεύονται όταν επιλέγετε να στείλετε μια αναφορά σφαλμάτων.</string>
+    <string name="privacy_policy_encouragement">Το NewPipe παίρνει πολύ σοβαρά την ιδιωτικότητα σας. Έτσι, η εφαρμογή αυτή δεν συλλέγει δεδομένα από εσάς χωρίς τη συγκατάθεσή σας. \nΗ πολιτική ιδιωτικού απόρρητου του NewPipe εξηγεί λεπτομερώς ποια δεδομένα αποστέλλονται και αποθηκεύονται όταν επιλέγετε να στείλετε μια αναφορά σφαλμάτων.</string>
     <string name="read_privacy_policy">Ανάγνωση της πολιτικής ιδιωτικού απόρρητου</string>
     <string name="app_license_title">Η άδεια του NewPipe</string>
     <string name="app_license">Το NewPipe είναι copylelft ελεύθερο λογισμικό: Μπορείτε να το χρησιμοποιήσετε, να το μελετήσετε, να το μοιραστείτε και να το βελτιώσετε κατά βούληση. Ειδικότερα, μπορείτε να το αναδιανείμετε ή/και να το τροποποιήσετε υπό την άδεια GNU General Public Licence όπως αυτή εκδόθηκε από το Free Software Foundation, είτε υπό την έκδοση 3 της άδειας, είτε (προαιρετικά) υπό οποιαδήποτε μεταγενέστερη άδεια.</string>
@@ -290,24 +285,9 @@
     <string name="previous_export">Προηγούμενη εξαγωγή</string>
     <string name="subscriptions_import_unsuccessful">Δεν ήταν δυνατή η εισαγωγή των εγγραφών</string>
     <string name="subscriptions_export_unsuccessful">Δεν ήταν δυνατή η εξαγωγή των εγγραφών</string>
-    <string name="import_youtube_instructions">Κάντε εισαγωγή των εγγραφών σας στο YouTube από το Google takeout:
-\n
-\n1. Πλοηγηθείτε στο: %1$s
-\n2. Εισέλθετε στο λογαριασμό σας, όταν σας ζητηθεί.
-\n3. Πατήστε το «Περιλαμβάνονται όλα τα δεδομένα του YouTube», στη συνέχεια «Κατάργηση επιλογής όλων» και επιλέξτε μόνο το «συνδρομές» και «ΟΚ».
-\n4. Πατήστε «Επόμενο βήμα» και μετά «Δημιουργία εξαγωγής».
-\n5. Πατήστε «Λήψη» όταν εμφανιστεί.
-\n6. Πατήστε το ΕΙΣΑΓΩΓΗ ΑΡΧΕΙΟΥ και επιλέξτε το ληφθέν αρχείο zip.
-\n7. Αν η εισαγωγή από το zip αποτύχει, εξάγετε το αρχείο .csv (συνήθως βρίσκεται στο \"YouTube και YouTube Music/subscriptions/subscriptions.csv\"), πατήστε το ΕΙΣΑΓΩΓΗ ΑΡΧΕΙΟΥ και επιλέξτε το ληφθέν αρχείο csv</string>
-    <string name="import_soundcloud_instructions">Για να εισάγετε τον λογαριασμό SoundCloud σας, πληκτρολογήστε τον σύνδεσμο ή το ID σας:
-\n
-\n1. Ενεργοποιήστε τη λειτουργία «Desktop mode» στον φυλλομετρητή σας (καθώς η ιστοσελίδα δεν είναι διαθέσιμη για κινητά)
-\n2. Πλοηθηθείτε στο %1$s
-\n3. Εισέλθετε στο λογαριασμό σας, όταν σας ζητηθεί
-\n4. Αντιγράψτε τον σύνδεσμο του λογαριασμού στον οποίο ανακατευθυνθήκατε.</string>
-    <string name="import_network_expensive_warning">Αυτή η διαδικασία μπορεί να χρησιμοποιήσει μεγάλο όγκο δεδομένων.
-\n
-\nΕπιθυμείτε να συνεχίσετε;</string>
+    <string name="import_youtube_instructions">Κάντε εισαγωγή των εγγραφών σας στο YouTube από το Google takeout: \n \n1. Πλοηγηθείτε στο: %1$s \n2. Εισέλθετε στο λογαριασμό σας, όταν σας ζητηθεί. \n3. Πατήστε το «Περιλαμβάνονται όλα τα δεδομένα του YouTube», στη συνέχεια «Κατάργηση επιλογής όλων» και επιλέξτε μόνο το «συνδρομές» και «ΟΚ». \n4. Πατήστε «Επόμενο βήμα» και μετά «Δημιουργία εξαγωγής». \n5. Πατήστε «Λήψη» όταν εμφανιστεί. \n6. Πατήστε το ΕΙΣΑΓΩΓΗ ΑΡΧΕΙΟΥ και επιλέξτε το ληφθέν αρχείο zip. \n7. Αν η εισαγωγή από το zip αποτύχει, εξάγετε το αρχείο .csv (συνήθως βρίσκεται στο \"YouTube και YouTube Music/subscriptions/subscriptions.csv\"), πατήστε το ΕΙΣΑΓΩΓΗ ΑΡΧΕΙΟΥ και επιλέξτε το ληφθέν αρχείο csv</string>
+    <string name="import_soundcloud_instructions">Για να εισάγετε τον λογαριασμό SoundCloud σας, πληκτρολογήστε τον σύνδεσμο ή το ID σας: \n \n1. Ενεργοποιήστε τη λειτουργία «Desktop mode» στον φυλλομετρητή σας (καθώς η ιστοσελίδα δεν είναι διαθέσιμη για κινητά) \n2. Πλοηθηθείτε στο %1$s \n3. Εισέλθετε στο λογαριασμό σας, όταν σας ζητηθεί \n4. Αντιγράψτε τον σύνδεσμο του λογαριασμού στον οποίο ανακατευθυνθήκατε.</string>
+    <string name="import_network_expensive_warning">Αυτή η διαδικασία μπορεί να χρησιμοποιήσει μεγάλο όγκο δεδομένων. \n \nΕπιθυμείτε να συνεχίσετε;</string>
     <string name="playback_speed_control">Έλεγχος ταχύτητας αναπαραγωγής</string>
     <string name="playback_tempo">Τέμπο</string>
     <string name="playback_pitch">Τόνος</string>
@@ -319,8 +299,7 @@
     <string name="skip_silence_checkbox">Γρήγορη αναπαραγωγή κατά τη διάρκεια της σίγασης</string>
     <string name="playback_step">Βήμα</string>
     <string name="playback_reset">Επαναφορά</string>
-    <string name="start_accept_privacy_policy">Προς συμμόρφωση με τον Ευρωπαϊκό Γενικό Κανονισμό για την Προστασία Δεδομένων (GDPR), σας εφιστούμε την προσοχή στην πολιτική προστασίας προσωπικών δεδομένων του NewPipe. Παραλούμε, διαβάστε την προσεκτικά.
-\nΘα πρέπει να την αποδεχτείτε προκειμένου να μας αποστείλετε την αναφορά σφάλματος.</string>
+    <string name="start_accept_privacy_policy">Προς συμμόρφωση με τον Ευρωπαϊκό Γενικό Κανονισμό για την Προστασία Δεδομένων (GDPR), σας εφιστούμε την προσοχή στην πολιτική προστασίας προσωπικών δεδομένων του NewPipe. Παραλούμε, διαβάστε την προσεκτικά. \nΘα πρέπει να την αποδεχτείτε προκειμένου να μας αποστείλετε την αναφορά σφάλματος.</string>
     <string name="accept">Αποδοχή</string>
     <string name="decline">Απόρριψη</string>
     <string name="limit_data_usage_none_description">Χωρίς όριο</string>
@@ -349,7 +328,7 @@
     <string name="list_view_mode">Προβολή λίστας</string>
     <string name="list">Λίστα</string>
     <string name="grid">Πλέγμα</string>
-    <string name="auto">Αυτόματα</string>
+    <string name="auto">Αυτόματο</string>
     <string name="app_update_available_notification_title">Μια νέα έκδοση του NewPipe είναι διαθέσιμη!</string>
     <string name="missions_header_finished">Ολοκληρώθηκε</string>
     <string name="missions_header_pending">Εκκρεμεί</string>
@@ -404,8 +383,7 @@
     <string name="start_downloads">Έναρξη λήψεων</string>
     <string name="pause_downloads">Παύση λήψεων</string>
     <string name="downloads_storage_ask_title">Ερώτηση πού να γίνει η λήψη</string>
-    <string name="downloads_storage_ask_summary">Θα ερωτηθείτε πού να αποθηκεύσετε κάθε λήψη.
-\nΕνεργοποιήστε τον επιλογέα φακέλων συστήματος (SAF), αν θέλετε να κάνετε λήψεις σε εξωτερική κάρτα μνήμης</string>
+    <string name="downloads_storage_ask_summary">Θα ερωτηθείτε πού να αποθηκεύσετε κάθε λήψη. \nΕνεργοποιήστε τον επιλογέα φακέλων συστήματος (SAF), αν θέλετε να κάνετε λήψεις σε εξωτερική κάρτα μνήμης</string>
     <string name="downloads_storage_use_saf_title">Χρήση επιλογέα φακέλων συστήματος (SAF)</string>
     <string name="downloads_storage_use_saf_summary">Το «Πλαίσιο Πρόσβασης Αποθήκευσης» (SAF) επιτρέπει λήψεις σε μια εξωτερική κάρτα SD</string>
     <string name="clear_playback_states_title">Διαγραφή θέσεων αναπαραγωγής</string>
@@ -422,7 +400,6 @@
         <item quantity="one">%s ακροατής</item>
         <item quantity="other">%s ακροατές</item>
     </plurals>
-    <string name="localization_changes_requires_app_restart">Η γλώσσα θα αλλάξει αφού επανεκκινηθεί η εφαρμογή</string>
     <string name="default_kiosk_page_summary">Προεπιλεγμένο περίπτερο</string>
     <string name="peertube_instance_add_https_only">Μόνο HTTPS σύνδεσμοι υποστηρίζονται</string>
     <string name="local">Τοπικά</string>
@@ -436,9 +413,7 @@
     <string name="search_showing_result_for">Εμφάνιση αποτελεσμάτων για: %s</string>
     <string name="feed_use_dedicated_fetch_method_enable_button">Ενεργοποίηση γρήγορης λειτουργίας</string>
     <string name="feed_use_dedicated_fetch_method_disable_button">Απενεργοποίηση γρήγορης λειτουργίας</string>
-    <string name="content_not_supported">Αυτό το περιεχόμενο δεν υποστηρίζεται ακόμη από το NewPipe.
-\n
-\nΕλπίζουμε ότι θα υποστηριχθεί σε μια μελλοντική έκδοση.</string>
+    <string name="content_not_supported">Αυτό το περιεχόμενο δεν υποστηρίζεται ακόμη από το NewPipe. \n \nΕλπίζουμε ότι θα υποστηριχθεί σε μια μελλοντική έκδοση.</string>
     <string name="detail_sub_channel_thumbnail_view_description">Μικρογραφία avatar του καναλιού</string>
     <string name="channel_created_by">Δημιουργήθηκε από %s</string>
     <string name="playlist_page_summary">Σελίδα λίστας αναπαραγωγής</string>
@@ -459,7 +434,7 @@
     <string name="title_activity_play_queue">Αναπαραγωγή ουράς</string>
     <string name="no_playlist_bookmarked_yet">Δεν υπάρχουν σελιδοδείκτες λίστας αναπαραγωγής ακόμα</string>
     <string name="select_a_playlist">Επιλέξτε μια λίστα αναπαραγωγής</string>
-    <string name="done">Τέλος</string>
+    <string name="done">Ολοκλήρωση</string>
     <string name="subtitle_activity_recaptcha">Πατήστε «Τέλος» όταν επιλυθεί</string>
     <string name="infinite_videos">∞ βίντεο</string>
     <string name="more_than_100_videos">100+ βίντεο</string>
@@ -469,10 +444,8 @@
     <string name="artists">Καλλιτέχνες</string>
     <string name="albums">Άλμπουμ</string>
     <string name="songs">Τραγούδια</string>
-    <string name="restricted_video">Αυτό το βίντεο έχει περιορισμό ηλικίας.
-\n
-\nΕνεργοποιήστε το «%1$s» στις ρυθμίσεις εάν θέλετε να το δείτε.</string>
-    <string name="youtube_restricted_mode_enabled_title">Ενεργοποίηση \"Περιορισμένη Λειτουργία\\ του YouTube</string>
+    <string name="restricted_video">Αυτό το βίντεο έχει περιορισμό ηλικίας. \n \nΕνεργοποιήστε το «%1$s» στις ρυθμίσεις εάν θέλετε να το δείτε.</string>
+    <string name="youtube_restricted_mode_enabled_title">Ενεργοποίηση \"Περιορισμένη Λειτουργία\" του YouTube</string>
     <string name="unsupported_url_dialog_message">Δεν ήταν δυνατή η αναγνώριση της διεύθυνσης URL. Άνοιγμα με άλλη εφαρμογή;</string>
     <string name="auto_queue_toggle">Αυτόματη προσθήκη στην ουρά</string>
     <string name="clear_queue_confirmation_description">Η ουρά του ενεργού αναπαραγωγού θα αντικατασταθεί</string>
@@ -491,17 +464,7 @@
     <string name="notification_scale_to_square_image_summary">Περικοπή της μικρογραφίας βίντεο που εμφανίζεται στην ειδοποίηση από 16:9 σε αναλογία διαστάσεων 1:1</string>
     <string name="notification_scale_to_square_image_title">Περικοπή μικρογραφίας σε αναλογία διαστάσεων 1:1</string>
     <string name="notification_action_buffering">Φόρτωση</string>
-    <string name="feed_use_dedicated_fetch_method_help_text">Πιστεύετε ότι η ροή φορτώνει πολύ αργά; Δοκιμάστε να ενεργοποιήσετε τη γρήγορη φόρτωση (από τις ρυθμίσεις ή πατώντας το παρακάτω κουμπί).
-\n
-\nΤο NewPipe προσφέρει δύο στρατηγικές φόρτωσης ροής:
-\n- Λήψη ολόκληρου του καναλιού συνδρομής, το οποίο είναι αργό αλλά πλήρες.
-\n- Χρήση ενός αποκλειστικού τελικού σημείου υπηρεσίας, το οποίο είναι γρήγορο αλλά συνήθως δεν είναι πλήρες.
-\n
-\nΗ διαφορά μεταξύ των δύο είναι ότι η γρήγορη συνήθως στερείται κάποιες πληροφορίες, όπως η διάρκεια ή ο τύπος του στοιχείου (δεν μπορεί να διακρίνει μεταξύ ζωντανών βίντεο και κανονικών) και μπορεί να επιστρέψει λιγότερα στοιχεία.
-\n
-\nΤο YouTube είναι ένα παράδειγμα υπηρεσίας της γρήγορης μεθόδου με τη ροή RSS.
-\n
-\nΣυνεπώς επιλέγετε ανάλογα: ταχύτητα ή ακριβείς πληροφορίες.</string>
+    <string name="feed_use_dedicated_fetch_method_help_text">Πιστεύετε ότι η ροή φορτώνει πολύ αργά; Δοκιμάστε να ενεργοποιήσετε τη γρήγορη φόρτωση (από τις ρυθμίσεις ή πατώντας το παρακάτω κουμπί). \n \nΤο NewPipe προσφέρει δύο στρατηγικές φόρτωσης ροής: \n- Λήψη ολόκληρου του καναλιού συνδρομής, το οποίο είναι αργό αλλά πλήρες. \n- Χρήση ενός αποκλειστικού τελικού σημείου υπηρεσίας, το οποίο είναι γρήγορο αλλά συνήθως δεν είναι πλήρες. \n \nΗ διαφορά μεταξύ των δύο είναι ότι η γρήγορη συνήθως στερείται κάποιες πληροφορίες, όπως η διάρκεια ή ο τύπος του στοιχείου (δεν μπορεί να διακρίνει μεταξύ ζωντανών βίντεο και κανονικών) και μπορεί να επιστρέψει λιγότερα στοιχεία. \n \nΤο YouTube είναι ένα παράδειγμα υπηρεσίας της γρήγορης μεθόδου με τη ροή RSS. \n \nΣυνεπώς επιλέγετε ανάλογα: ταχύτητα ή ακριβείς πληροφορίες.</string>
     <string name="feed_oldest_subscription_update">Η ροή ανανεώθηκε: %s</string>
     <string name="feed_notification_loading">Φόρτωση ροής…</string>
     <string name="feed_processing_message">Επεξεργασία ροής…</string>
@@ -528,10 +491,9 @@
         <item quantity="other">%d δευτερόλεπτα</item>
     </plurals>
     <string name="new_seek_duration_toast">Λόγω περιορισμών του ExoPlayer, η διάρκεια αναζήτησης ορίστηκε στα %d δευτερόλεπτα</string>
-    <string name="remove_watched_popup_yes_and_partially_watched_videos">Ναι. Και τα μερικώς θεαθέντα βίντεο</string>
-    <string name="remove_watched_popup_warning">Τα βίντεο που εθεάθησαν πριν και αφού προστέθηκαν στη λίστα αναπαραγωγής θα απομακρυνθούν
-\nΕίστε σίγουρος; Δεν μπορεί να αναιρεθεί!</string>
-    <string name="remove_watched_popup_title">Απομάκρυνση θεαθέντων βίντεο;</string>
+    <string name="remove_watched_popup_partially_watched_streams">Ναι. Και τα μερικώς θεαθέντα βίντεο</string>
+    <string name="remove_watched_popup_warning">Οι ροές που εθεάθησαν πριν και αφού προστέθηκαν στη λίστα αναπαραγωγής θα απομακρυνθούν \nΕίστε σίγουρος;</string>
+    <string name="remove_watched_popup_title">Απομάκρυνση θεαθέντων ροών;</string>
     <string name="remove_watched">Απομάκρυνση όσων θεάθησαν</string>
     <string name="app_language_title">Γλώσσα εφαρμογής</string>
     <string name="choose_instance_prompt">Επιλογή μιας instance</string>
@@ -544,7 +506,7 @@
     <string name="show_memory_leaks">Εμφάνιση διαρροών μνήμης</string>
     <string name="unmute">Κατάργηση σίγασης</string>
     <string name="enqueued">Προστέθηκε στην ουρά</string>
-    <string name="enqueue_stream">Προσθήκη στην ουρά</string>
+    <string name="enqueue_stream">Προσθήκη σε ουρά</string>
     <string name="most_liked">Πιο αγαπημένα</string>
     <string name="error_report_open_github_notice">Παρακαλούμε ελέγξτε αν το πρόβλημα σας έχει ήδη αναφερθεί. Οι διπλές αναφορές μας στερούν το χρόνο που θα μπορούσαμε να διαθέσουμε για την επίλυση του προβλήματος.</string>
     <string name="clear_cookie_summary">Εκκαθάριση των cookies που αποθηκεύει η εφαρμογή όταν επιλύετε ένα reCAPTCHA</string>
@@ -584,8 +546,7 @@
     <string name="private_content">Αυτό το περιεχόμενο είναι ιδιωτικό και δεν μπορεί να αναπαραχθεί ή να το κατεβάσετε με το NewPipe.</string>
     <string name="soundcloud_go_plus_content">Αυτό είναι ένα κομμάτι SoundCloud Go+, τουλάχιστον στη χώρα σας. Έτσι δεν μπορεί να αναπαραχθεί ή να το κατεβάσετε με το NewPipe.</string>
     <string name="georestricted_content">Αυτό το περιεχόμενο δεν είναι διαθέσιμο στη χώρα σας.</string>
-    <string name="restricted_video_no_stream">Αυτό το βίντεο έχει περιορισμό ηλικίας.
-\nΛόγω της νέας πολιτικής του YouTube για αυτά τα βίντεο, το NewPipe δεν μπορεί να το αναπαράγει.</string>
+    <string name="restricted_video_no_stream">Αυτό το βίντεο έχει περιορισμό ηλικίας. \nΛόγω της νέας πολιτικής του YouTube για αυτά τα βίντεο, το NewPipe δεν μπορεί να το αναπαράγει.</string>
     <string name="featured">Επιλεγμένα</string>
     <string name="radio">Ράδιο</string>
     <string name="recaptcha_solve">Λύση</string>
@@ -596,7 +557,7 @@
     <string name="night_theme_title">Νυχτερινό θέμα</string>
     <string name="show_channel_details">Εμφάνιση λεπτομερειών καναλιού</string>
     <string name="disable_media_tunneling_summary">Απενεργοποιήστε το media tunneling, αν παρατηρείτε μαύρη οθόνη ή διακοπές κατά την αναπαραγωγή βίντεο.</string>
-    <string name="disable_media_tunneling_title">Απενεργοποίηση media tunneling</string>
+    <string name="disable_media_tunneling_title">Διατυπή σήραγγα των μέσων μαζικής ενημέρωσης</string>
     <string name="metadata_privacy_internal">Εσωτερικό</string>
     <string name="metadata_privacy_private">Ιδιωτικό</string>
     <string name="metadata_privacy_unlisted">Εκτός λίστας</string>
@@ -612,15 +573,12 @@
     <string name="description_select_enable">Ενεργοποίηση επιλογής κειμένου στην περιγραφή</string>
     <string name="description_select_note">Τώρα μπορείτε να επιλέξετε κείμενο εντός της περιγραφής. Σημειώστε ότι, η σελίδα μπορεί να παρουσιάζει αστάθεια κατά τη διάρκεια της κατάστασης επιλογής κειμένου.</string>
     <string name="open_website_license">Ανοικτή ιστοσελίδα</string>
-    <string name="service_provides_reason">Το %s παρέχει αυτή την αιτία:</string>
     <string name="account_terminated">Ο λογαριασμός διαγράφηκε</string>
     <string name="feed_load_error_fast_unknown">Η κατάσταση γρήγορης τροφοδοσίας δεν παρέχει περισσότερες πληροφορίες.</string>
-    <string name="feed_load_error_terminated">Ο λογαριασμός του δημιουργού έχει διαγραφεί.
-\nΤο NewPipe δε θα μπορεί να φορτώσει αυτή την τροφοδοσία στο μέλλον.
-\nΘέλετε να απεγγραφείτε από αυτό το κανάλι;</string>
+    <string name="feed_load_error_terminated">Ο λογαριασμός του δημιουργού έχει διαγραφεί. \nΤο NewPipe δε θα μπορεί να φορτώσει αυτή την τροφοδοσία στο μέλλον. \nΘέλετε να απεγγραφείτε από αυτό το κανάλι;</string>
     <string name="feed_load_error_account_info">Αδυναμία φόρτωσης τροφοδοσίας για \'%s\'.</string>
     <string name="feed_load_error">Σφάλμα φόρτωσης τροφοδοσίας</string>
-    <string name="downloads_storage_use_saf_summary_api_29">Από το Android 10 και μετά, μόνο το SAF υποστηρίζεται</string>
+    <string name="downloads_storage_use_saf_summary_api_29">Από το Android 10 και μετά, μόνο το Πλαίσιο Πρόσβασης Αποθήκευσης υποστηρίζεται</string>
     <string name="downloads_storage_ask_summary_no_saf_notice">Θα ερωτηθείτε πού να αποθηκεύσετε κάθε λήψη</string>
     <string name="no_dir_yet">Δεν έχει ορισθεί φάκελος λήψεων ακόμα, eπιλέξτε τον προεπιλεγμένο φάκελο τώρα</string>
     <string name="metadata_host">Host</string>
@@ -628,14 +586,12 @@
     <string name="on">Ενεργό</string>
     <string name="tablet_mode_title">Κατάσταση tablet</string>
     <string name="comments_are_disabled">Τα σχόλια είναι απενεργοποιημένα</string>
-    <string name="dont_show">Απόκρυψη</string>
+    <string name="dont_show">Μην εμφανίζεις</string>
     <string name="low_quality_smaller">Χαμηλή ποιότητα (μικρότερο)</string>
     <string name="high_quality_larger">Υψηλή ποιότητα (μεγαλύτερο)</string>
     <string name="seekbar_preview_thumbnail_title">Προεπισκόπηση στην μπάρα αναζήτησης</string>
     <string name="mark_as_watched">Σήμανση ως αναπαραχθέν</string>
     <string name="detail_heart_img_view_description">Επισημάνθηκε από τον δημιουργό</string>
-    <string name="show_image_indicators_summary">Εμφάνιση χρωματιστής κορδέλας πάνω στις εικόνες, που δείχνει την πηγή τους: κόκκινη για δίκτυο, μπλε για δίσκο και πράσινο για μνήμη</string>
-    <string name="show_image_indicators_title">Εμφάνιση δεικτών εικόνων</string>
     <string name="remote_search_suggestions">Προτάσεις απομακρυσμένης αναζήτησης</string>
     <string name="local_search_suggestions">Προτάσεις τοπικής αναζήτησης</string>
     <plurals name="deleted_downloads_toast">
@@ -656,17 +612,15 @@
     <string name="manual_update_description">Χειροκίνητος έλεγχος για νέα έκδοση</string>
     <string name="check_for_updates">Έλεγχος αναβάθμισης</string>
     <string name="feed_new_items">Νέα αντικείμενα τροφοδοσίας</string>
-    <string name="show_crash_the_player_title">Εμφάνιση «Κατάρρευση αναπαραγωγέα\\</string>
+    <string name="show_crash_the_player_title">Εμφάνιση \"Κατάρρευση αναπαραγωγέα\"</string>
     <string name="show_crash_the_player_summary">Εμφανίζει μια επιλογή κατάρρευσης κατά τη χρήση του αναπαραγωγέα</string>
     <string name="crash_the_player">Κατάρρευση αναπαραγωγέα</string>
     <string name="error_report_channel_name">Ειδοποίηση αναφοράς σφάλματος</string>
     <string name="error_report_channel_description">Ειδοποιήσεις για την αναφορά σφαλμάτων</string>
     <string name="error_report_notification_toast">Συνέβη ένα σφάλμα. Δείτε την ειδοποίηση</string>
     <string name="create_error_notification">Δημιουργία ειδοποίησης σφάλματος</string>
-    <string name="no_appropriate_file_manager_message">Δε βρέθηκε κατάλληλος διαχειριστής αρχείων για αυτή την ενέργεια.
-\nΕγκαταστήστε έναν ή δοκιμάστε να απενεργοποιήσετε το \'%s\' στις ρυθμίσεις λήψεων</string>
-    <string name="no_appropriate_file_manager_message_android_10">Δε βρέθηκε κατάλληλος διαχειριστής αρχείων για αυτή την ενέργεια.
-\nΕγκαταστήστε έναν συμβατό με το Πλαίσιο Πρόσβασης Αποθήκευσης</string>
+    <string name="no_appropriate_file_manager_message">Δε βρέθηκε κατάλληλος διαχειριστής αρχείων για αυτή την ενέργεια. \nΕγκαταστήστε έναν ή δοκιμάστε να απενεργοποιήσετε το \'%s\' στις ρυθμίσεις λήψεων</string>
+    <string name="no_appropriate_file_manager_message_android_10">Δε βρέθηκε κατάλληλος διαχειριστής αρχείων για αυτή την ενέργεια. \nΕγκαταστήστε έναν συμβατό με το Πλαίσιο Πρόσβασης Αποθήκευσης</string>
     <string name="error_report_notification_title">Το NewPipe παρουσίασε ένα σφάλμα. Πατήστε για αναφορά</string>
     <string name="show_error_snackbar">Εμφάνιση μιας snackbar σφάλματος</string>
     <string name="detail_pinned_comment_view_description">Καρφιτσωμένο σχόλιο</string>
@@ -733,7 +687,7 @@
     <string name="right_gesture_control_summary">Επιλέξτε χειρονομία για το δεξί μισό της οθόνης του προγράμματος αναπαραγωγής</string>
     <string name="right_gesture_control_title">Ενέργεια δεξιάς χειρονομίας</string>
     <string name="brightness">Φωτεινότητα</string>
-    <string name="volume">Ένταση</string>
+    <string name="volume">Όγκος</string>
     <string name="none">Καμία</string>
     <string name="prefer_original_audio_title">Προτίμηση πρωτότυπου ήχου</string>
     <string name="prefer_original_audio_summary">Επιλογή του πρωτότυπου κομματιού ήχου ανεξάρτητα από τη γλώσσα</string>
@@ -748,9 +702,7 @@
     <string name="use_exoplayer_decoder_fallback_title">Χρησιμοποιήστε την δυνατότητα εναλλακτικού αποκωδικοποιητή του ExoPlayer</string>
     <string name="use_exoplayer_decoder_fallback_summary">Ενεργοποιήστε αυτήν την επιλογή εάν αντιμετωπίζετε προβλήματα με την προετοιμασία του αποκωδικοποιητή, η οποία επιστρέφει σε αποκωδικοποιητές χαμηλότερης προτεραιότητας εάν αποτύχει η προετοιμασία του πρωτεύοντος αποκωδικοποιητή. Αυτό μπορεί να έχει ως αποτέλεσμα κακή απόδοση αναπαραγωγής από ότι όταν χρησιμοποιείτε κύριους αποκωδικοποιητές</string>
     <string name="always_use_exoplayer_set_output_surface_workaround_title">Χρησιμοποιείτε πάντα τον εναλλακτικό τρόπο ρύθμισης της επιφάνειας εξόδου βίντεο του ExoPlayer</string>
-    <string name="always_use_exoplayer_set_output_surface_workaround_summary">Αυτή η λύση απελευθερώνει και επαναφέρει τους κωδικοποιητές βίντεο όταν συμβαίνει μια αλλαγή επιφάνειας, αντί να ρυθμίζει την επιφάνεια απευθείας στον κωδικοποιητή. Χρησιμοποιείται ήδη από το ExoPlayer σε ορισμένες συσκευές με αυτό το πρόβλημα, αυτή η ρύθμιση έχει επίδραση μόνο σε Android 6 και νεότερη έκδοση.
-\n
-\nΗ ενεργοποίηση αυτής της επιλογής μπορεί να αποτρέψει σφάλματα αναπαραγωγής κατά την εναλλαγή του τρέχοντος προγράμματος αναπαραγωγής βίντεο ή τη μετάβαση σε πλήρη οθόνη</string>
+    <string name="always_use_exoplayer_set_output_surface_workaround_summary">Αυτή η λύση απελευθερώνει και επαναφέρει τους κωδικοποιητές βίντεο όταν συμβαίνει μια αλλαγή επιφάνειας, αντί να ρυθμίζει την επιφάνεια απευθείας στον κωδικοποιητή. Χρησιμοποιείται ήδη από το ExoPlayer σε ορισμένες συσκευές με αυτό το πρόβλημα, αυτή η ρύθμιση έχει επίδραση μόνο σε Android 6 και νεότερη έκδοση. \n \nΗ ενεργοποίηση αυτής της επιλογής μπορεί να αποτρέψει σφάλματα αναπαραγωγής κατά την εναλλαγή του τρέχοντος προγράμματος αναπαραγωγής βίντεο ή τη μετάβαση σε πλήρη οθόνη</string>
     <string name="audio_track_name">%1$s %2$s</string>
     <string name="audio_track_type_original">αρχικό</string>
     <string name="audio_track_type_dubbed">μεταγλωττισμένο</string>
@@ -801,10 +753,8 @@
     <string name="metadata_banners">Ταμπέλες</string>
     <string name="share_playlist_with_list">Κοινοποίηση λίστας URL</string>
     <string name="share_playlist_with_titles">Κοινοποίηση με τίτλους</string>
-    <string name="share_playlist_content_details">%1$s
-\n%2$s</string>
+    <string name="share_playlist_content_details">%1$s \n%2$s</string>
     <string name="share_playlist">Κοινοποίηση λίστας</string>
-    <string name="share_playlist_with_titles_message">Μοιραστείτε τη λίστα αναπαραγωγής με λεπτομέρειες όπως το όνομα της λίστας αναπαραγωγής και τους τίτλους βίντεο ή ως μια απλή λίστα διευθύνσεων URL βίντεο</string>
     <string name="video_details_list_item">- %1$s: %2$s</string>
     <plurals name="replies">
         <item quantity="one">%s απάντηση</item>
@@ -817,13 +767,63 @@
     <string name="no">Όχι</string>
     <string name="yes">Ναι</string>
     <string name="settings_category_backup_restore_title">Αντίγραφο ασφαλείας και επαναφορά</string>
-    <string name="auto_update_check_description">Το NewPipe μπορεί να ελέγχει αυτόματα για νέες εκδόσεις και να σας ειδοποιεί μόλις είναι διαθέσιμες.
-\nΘέλετε να το ενεργοποιήσετε;</string>
+    <string name="auto_update_check_description">Το NewPipe μπορεί να ελέγχει αυτόματα για νέες εκδόσεις και να σας ειδοποιεί μόλις είναι διαθέσιμες. \nΘέλετε να το ενεργοποιήσετε;</string>
     <string name="reset_settings_title">Επαναφορά ρυθμίσεων</string>
     <string name="reset_settings_summary">Επαναφορά όλων των ρυθμίσεων στις αρχικές τιμές τους</string>
-    <string name="reset_all_settings">Η επαναφορά όλων των ρυθμίσεων θα απορρίψει όλες τις τροποποιημένες ρυθμίσεις σας και θα επανεκκινήσει την εφαρμογή.
-\n
-\nΕίστε βέβαιοι ότι θέλετε να συνεχίσετε;</string>
+    <string name="reset_all_settings">Η επαναφορά όλων των ρυθμίσεων θα απορρίψει όλες τις τροποποιημένες ρυθμίσεις σας και θα επανεκκινήσει την εφαρμογή. \n \nΕίστε βέβαιοι ότι θέλετε να συνεχίσετε;</string>
     <string name="import_settings_vulnerable_format">Οι ρυθμίσεις στην εξαγωγή που εισάγεται χρησιμοποιούν μια ευάλωτη μορφή που είχε καταργηθεί από το NewPipe 0.27.0. Βεβαιωθείτε ότι η εξαγωγή που εισάγεται προέρχεται από αξιόπιστη πηγή και προτιμήστε να χρησιμοποιείτε μόνο εξαγωγές που λαμβάνονται από το NewPipe 0.27.0 ή νεότερο στο μέλλον. Η υποστήριξη για εισαγωγή ρυθμίσεων σε αυτήν την ευάλωτη μορφή θα καταργηθεί σύντομα εντελώς και, στη συνέχεια, οι παλιές εκδόσεις του NewPipe δεν θα μπορούν πλέον να εισάγουν ρυθμίσεις εξαγωγών από νέες εκδόσεις.</string>
     <string name="audio_track_type_secondary">δευτερεύων</string>
+    <string name="tab_bookmarks_short">Λίστες αναπαραγωγής</string>
+    <string name="share_playlist_as_youtube_temporary_playlist">Μοιραστείτε ως προσωρινή λίστα αναπαραγωγής στο YouTube</string>
+    <string name="select_a_feed_group">Επιλογή ομάδας τροφοδοσίας</string>
+    <string name="no_feed_group_created_yet">Δεν δημιουργήθηκε ομάδα τροφοδοσίας ακόμα</string>
+    <string name="feed_group_page_summary">Σελίδα καναλιού ομάδας</string>
+    <string name="search_with_service_name">Αναζήτηση %1$s</string>
+    <string name="search_with_service_name_and_filter">Αναζήτηση %1$s (%2$s)</string>
+    <string name="channel_tab_likes">Μου αρέσει</string>
+    <string name="migration_info_6_7_title">Η σελίδα των SoundCloud Top 50 αφαιρέθηκε</string>
+    <string name="migration_info_6_7_message">Το SoundCloud έχει καταργήσει τα αρχικά charts με τα Top 50. Η αντίστοιχη καρτέλα έχει αφαιρεθεί από την κύρια σελίδα σας.</string>
+    <string name="migration_info_7_8_title">Οι συνδυασμένες τάσεις στο YouTube καταργήθηκαν</string>
+    <string name="migration_info_7_8_message">Το YouTube έχει καταργήσει τη συνδυασμένη σελίδα με τάσεις από την 21 Ιουλίου 2025. Το NewPipe αντικατέστησε την προεπιλεγμένη σελίδα τάσεων με τις ζωντανές ροές τάσεων.\n\nΜπορείτε επίσης να επιλέξετε διαφορετικές σελίδες με τάσεις στις \"Ρυθμίσεις &gt; Περιεχόμενο &gt; Περιεχόμενο κύριας σελίδας\".</string>
+    <string name="trending_gaming">Τάσεις παιχνιδιών</string>
+    <string name="trending_podcasts">Τάσεις podcasts</string>
+    <string name="trending_movies">Τάσεις ταινιών και εκπομπών</string>
+    <string name="trending_music">Μουσικές τάσεις</string>
+    <string name="short_thousand">%sK</string>
+    <string name="short_million">%sM</string>
+    <string name="short_billion">%sB</string>
+    <string name="permission_display_over_apps_message">Για να χρησιμοποιήσετε το Αναδυόμενο Πρόγραμμα Αναπαραγωγής, επιλέξτε %1$s στο ακόλουθο μενού ρυθμίσεων Android και ενεργοποιήστε το %2$s.</string>
+    <string name="permission_display_over_apps_permission_name">«Να επιτρέπεται η εμφάνιση πάνω από άλλες εφαρμογές»</string>
+    <string name="delete_file">Διαγραφή αρχείου</string>
+    <string name="delete_entry">Διαγραφή καταχώρησης</string>
+    <string name="entry_deleted">Η καταχώρηση διαγράφηκε</string>
+    <string name="account_terminated_service_provides_reason">Ο λογαριασμός έκλεισε\n\n%1$s παρέχει αυτήν την αιτία: %2$s</string>
+    <string name="player_http_403">Σφάλμα HTTP 403 που ελήφθη από τον διακομιστή κατά την αναπαραγωγή, πιθανώς λόγω λήξης διεύθυνσης URL ροής ή αποκλεισμού IP</string>
+    <string name="player_http_invalid_status">Σφάλμα HTTP %1$s ελήφθη από τον διακομιστή κατά την αναπαραγωγή</string>
+    <string name="youtube_player_http_403">Σφάλμα HTTP 403 ελήφθη από τον διακομιστή κατά την αναπαραγωγή, πιθανώς λόγω αποκλεισμού IP ή προβλημάτων απεμπλοκής URL ροής</string>
+    <string name="sign_in_confirm_not_bot_error">To %1$s αρνήθηκε να παράσχει δεδομένα, ζητώντας σύνδεση για να επιβεβαιώσει ότι ο αιτών δεν είναι bot.\n\nΗ IP σας ενδέχεται να έχει αποκλειστεί προσωρινά από το %1$s. Μπορείτε να περιμένετε λίγο ή να αλλάξετε IP (για παράδειγμα, ενεργοποιώντας/απενεργοποιώντας ένα VPN ή αλλάζοντας από WiFi σε δεδομένα κινητής τηλεφωνίας).\n\nΓια περισσότερες πληροφορίες, ανατρέξτε σε <a href="%2$s"> αυτή την καταχώριση στις Συχνές Ερωτήσεις </a>.</string>
+    <string name="unsupported_content_in_country">Αυτό το περιεχόμενο δεν είναι διαθέσιμο για την τρέχουσα επιλεγμένη χώρα περιεχομένου.\n\nΑλλάξτε την επιλογή σας από \"Ρυθμίσεις &gt; Περιεχόμενο &gt; Προεπιλεγμένη χώρα περιεχομένου\".</string>
+    <string name="kao_dialog_more_info">Λεπτομέρειες</string>
+    <string name="kao_solution">Λύση</string>
+    <string name="kao_dialog_warning">Τον Αύγουστο του 2025, η Google ανακοίνωσε ότι από τον Σεπτέμβριο του 2026, η εγκατάσταση εφαρμογών θα απαιτεί επαλήθευση προγραμματιστή για όλες τις εφαρμογές Android σε πιστοποιημένες συσκευές, συμπεριλαμβανομένων εκείνων που είναι εγκατεστημένες εκτός του Play Store. Δεδομένου ότι οι προγραμματιστές του NewPipe δεν συμφωνούν με αυτήν την απαίτηση, το NewPipe δεν θα λειτουργεί πλέον σε πιστοποιημένες συσκευές Android μετά από αυτό το χρονικό διάστημα.</string>
+    <plurals name="export_subscriptions">
+        <item quantity="one">Εξαγωγή %d συνδρομής…</item>
+        <item quantity="other">Εξαγωγή %d συνδρομών…</item>
+    </plurals>
+    <plurals name="load_subscriptions">
+        <item quantity="one">Φόρτωση %d συνδρομής…</item>
+        <item quantity="other">Φόρτωση %d συνδρομών…</item>
+    </plurals>
+    <plurals name="import_subscriptions">
+        <item quantity="one">Εισαγωγή %d συνδρομής…</item>
+        <item quantity="other">Εισαγωγή %d συνδρομών…</item>
+    </plurals>
+    <string name="import_subscriptions_title">Εισαγωγή συνδρομών</string>
+    <string name="export_subscriptions_title">Εξαγωγή συνδρομών</string>
+    <string name="import_subscriptions_summary">Εισαγωγή συνδρομών από προηγούμενη εξαγωγή</string>
+    <string name="export_subscriptions_summary">Εξαγωγή των συνδρομών σας σε αρχείο .json</string>
+    <string name="import_from_previous_export">Εισαγωγή από προηγούμενη εξαγωγή</string>
+    <string name="api23_requirement_dialog_title">Το NewPipe καταργεί την υποστήριξη για το Android 5</string>
+    <string name="api23_requirement_dialog_message">Δυστυχώς, το NewPipe βασίζεται σε ορισμένες βιβλιοθήκες που έχουν σταματήσει να υποστηρίζουν τα Android 5.0 και 5.1. Ως εκ τούτου, η επόμενη έκδοση του NewPipe θα λειτουργεί μόνο σε συσκευές με Android 6 ή νεότερη έκδοση, δυστυχώς. Διαβάστε περισσότερα στην ανάρτηση του ιστολογίου.</string>
+    <string name="api23_requirement_dialog_blogpost">Δημοσίευση στο ιστολόγιο</string>
 </resources>

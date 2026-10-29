@@ -27,8 +27,8 @@ import org.schabi.newpipe.util.DeviceUtils;
 import org.schabi.newpipe.util.Localization;
 import org.schabi.newpipe.util.NavigationHelper;
 import org.schabi.newpipe.util.external_communication.ShareUtils;
+import org.schabi.newpipe.util.image.CoilHelper;
 import org.schabi.newpipe.util.image.ImageStrategy;
-import org.schabi.newpipe.util.image.PicassoHelper;
 import org.schabi.newpipe.util.text.TextEllipsizer;
 
 public class CommentInfoItemHolder extends InfoItemHolder {
@@ -82,14 +82,12 @@ public class CommentInfoItemHolder extends InfoItemHolder {
     @Override
     public void updateFromItem(final InfoItem infoItem,
                                final HistoryRecordManager historyRecordManager) {
-        if (!(infoItem instanceof CommentsInfoItem)) {
+        if (!(infoItem instanceof CommentsInfoItem item)) {
             return;
         }
-        final CommentsInfoItem item = (CommentsInfoItem) infoItem;
-
 
         // load the author avatar
-        PicassoHelper.loadAvatar(item.getUploaderAvatars()).into(itemThumbnailView);
+        CoilHelper.INSTANCE.loadAvatar(itemThumbnailView, item.getUploaderAvatars());
         if (ImageStrategy.shouldLoadImages()) {
             itemThumbnailView.setVisibility(View.VISIBLE);
             itemRoot.setPadding(commentVerticalPadding, commentVerticalPadding,
@@ -101,13 +99,15 @@ public class CommentInfoItemHolder extends InfoItemHolder {
         }
         itemThumbnailView.setOnClickListener(view -> openCommentAuthor(item));
 
-
         // setup the top row, with pinned icon, author name and comment date
         itemPinnedView.setVisibility(item.isPinned() ? View.VISIBLE : View.GONE);
-        itemTitleView.setText(Localization.concatenateStrings(item.getUploaderName(),
-                Localization.relativeTimeOrTextual(itemBuilder.getContext(), item.getUploadDate(),
+        final String uploaderName = Localization.localizeUserName(item.getUploaderName());
+        itemTitleView.setText(Localization.concatenateStrings(
+                uploaderName,
+                Localization.relativeTimeOrTextual(
+                        itemBuilder.getContext(),
+                        item.getUploadDate(),
                         item.getTextualUploadDate())));
-
 
         // setup bottom row, with likes, heart and replies button
         itemLikesCountView.setText(

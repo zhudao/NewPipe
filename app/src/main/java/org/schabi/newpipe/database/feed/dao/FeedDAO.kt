@@ -1,13 +1,16 @@
 package org.schabi.newpipe.database.feed.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Transaction
-import androidx.room.Update
+import androidx.room3.Dao
+import androidx.room3.DaoReturnTypeConverters
+import androidx.room3.Insert
+import androidx.room3.OnConflictStrategy
+import androidx.room3.Query
+import androidx.room3.Transaction
+import androidx.room3.Update
+import androidx.room3.rxjava3.RxDaoReturnTypeConverters
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
+import java.time.OffsetDateTime
 import org.schabi.newpipe.database.feed.model.FeedEntity
 import org.schabi.newpipe.database.feed.model.FeedGroupEntity
 import org.schabi.newpipe.database.feed.model.FeedLastUpdatedEntity
@@ -15,9 +18,9 @@ import org.schabi.newpipe.database.stream.StreamWithState
 import org.schabi.newpipe.database.stream.model.StreamStateEntity
 import org.schabi.newpipe.database.subscription.NotificationMode
 import org.schabi.newpipe.database.subscription.SubscriptionEntity
-import java.time.OffsetDateTime
 
 @Dao
+@DaoReturnTypeConverters(RxDaoReturnTypeConverters::class)
 abstract class FeedDAO {
     @Query("DELETE FROM feed")
     abstract fun deleteAll(): Int
@@ -27,6 +30,10 @@ abstract class FeedDAO {
      *                         [FeedGroupEntity.GROUP_ALL_ID] to not filter by group
      * @param includePlayed    if false, only return all of the live, never-played or non-finished
      *                         feed streams (see `@see` items); if true no filter is applied
+     * @param includePartiallyPlayed if false, exclude streams that have been partially
+     *                         played, keeping only never-played streams or streams whose
+     *                         playback position is within the start/end playback thresholds;
+     *                         if true, no partial-playback filter is applied
      * @param uploadDateBefore get only streams uploaded before this date (useful to filter out
      *                         future streams); use null to not filter by upload date
      * @return the feed streams filtered according to the conditions provided in the parameters
@@ -168,10 +175,10 @@ abstract class FeedDAO {
         ON fgs.subscription_id = lu.subscription_id AND fgs.group_id = :groupId
         """
     )
-    abstract fun oldestSubscriptionUpdate(groupId: Long): Flowable<List<OffsetDateTime>>
+    abstract fun oldestSubscriptionUpdate(groupId: Long): Flowable<List<OffsetDateTime?>>
 
     @Query("SELECT MIN(last_updated) FROM feed_last_updated")
-    abstract fun oldestSubscriptionUpdateFromAll(): Flowable<List<OffsetDateTime>>
+    abstract fun oldestSubscriptionUpdateFromAll(): Flowable<List<OffsetDateTime?>>
 
     @Query("SELECT COUNT(*) FROM feed_last_updated WHERE last_updated IS NULL")
     abstract fun notLoadedCount(): Flowable<Long>

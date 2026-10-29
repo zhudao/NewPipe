@@ -45,9 +45,6 @@
     </plurals>
     <string name="infinite_videos">∞ ⵉⴼⵉⴷⵢⵓⵜⵏ</string>
     <string name="more_than_100_videos">100+ ⵉⴼⵉⴷⵢⵓⵜⵏ</string>
-    <string name="short_billion">ⴱ</string>
-    <string name="short_million">ⵎ</string>
-    <string name="short_thousand">ⴽ</string>
     <string name="audio">ⴰⵎⵙⵍⴰⵢ</string>
     <string name="video">ⴰⴼⵉⴷⵢⵓ</string>
     <string name="detail_likes_img_view_description">ⵉⵔⵉⵜⵏ</string>
@@ -78,7 +75,7 @@
     <string name="cancel">ⵙⵔ</string>
     <string name="video_detail_by">ⵙ %s</string>
     <string name="channel_created_by">ⵔⵏⵏⵓ ⵜ %s</string>
-    <string name="feed_group_dialog_delete_message">ⵉⵙ ⵜⵅⵙⴷ ⴰⴷ ⵜⴽⴽⵙⴷ ⵜⵔⴰⴱⴱⵓⵜ ⴰ\?</string>
+    <string name="feed_group_dialog_delete_message">ⵉⵙ ⵜⵅⵙⴷ ⴰⴷ ⵜⴽⴽⵙⴷ ⵜⵔⴰⴱⴱⵓⵜ ⴰ?</string>
     <string name="stop">ⴱⴷⴷ</string>
     <string name="grid">ⴰⵥⵟⵟⴰ</string>
     <string name="list">ⵜⴰⵍⴳⴰⵎⵜ</string>
@@ -104,7 +101,7 @@
     <string name="use_external_audio_player_title">ⵙⵎⵔⵙ ⵉⵎⵖⵔⵉ ⵏ ⵉⵎⵙⵍⵉ ⴰⴱⵕⵕⴰⵏⵉ</string>
     <string name="use_external_video_player_title">ⵙⵎⵔⵙ ⵉⵎⵖⵔⵉ ⵏ ⵓⴼⵉⴷⵢⵓ ⴰⴱⵕⵕⴰⵏⵉ</string>
     <string name="search_showing_result_for">ⴰⵙⵎⴰⵍ ⵏ ⵜⴰⵢⴰⴼⵓⵜ ⵉ: %s</string>
-    <string name="did_you_mean">ⵎⵉⵏ ⵜⵅⵙⴷ ⴰⴷ ⵜⵉⵏⵉⴷ:\"%1$s\"\?</string>
+    <string name="did_you_mean">ⵎⵉⵏ ⵜⵅⵙⴷ ⴰⴷ ⵜⵉⵏⵉⴷ:\"%1$s\"?</string>
     <string name="main_bg_subtitle">ⴰⴷⵔ ⵅ \"ⵔⵣⵓ\"ⴰⴼⴰⴷ ⴰⴷ ⵜⵜⴰⵡⵍⴷ</string>
     <string name="show_comments_title">ⵙⴽⵏ ⵉⵅⴼⴰⵡⴰⵍⵏ</string>
     <string name="theme_title">ⴰⵙⴳⵓⵎ</string>

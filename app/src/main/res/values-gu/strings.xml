@@ -23,7 +23,7 @@
     <string name="notification_action_0_title">પ્રથમ ક્રિયા બટન</string>
     <string name="notification_scale_to_square_image_summary">સૂચનામાં બતાવેલ વિડિઓ થંબનેલને ૧૬:૯ થી ૧:૧ સાપેક્ષ ગુણોત્તરમાં કાપો</string>
     <string name="notification_scale_to_square_image_title">થંબનેલને ૧:૧ સાપેક્ષ ગુણોત્તરમાં કાપો</string>
-    <string name="show_play_with_kodi_summary">કોડી મીડિયા સેન્ટર દ્વારા વિડિઓ ચલાવવાનો વિકલ્પ દર્શાવો</string>
+    <string name="show_play_with_kodi_summary">કોડિ મીડિયા સેન્ટર દ્વારા વિડિઓ ચલાવવાનો વિકલ્પ દર્શાવો</string>
     <string name="kore_not_found">અનુપસ્થિત Kore અનુપ્રયોગ સ્થાપિત કરીએ?</string>
     <string name="show_higher_resolutions_summary">ફક્ત થોડા ઉપકરણો 2K / 4K વિડિઓઝ ચલાવી શકે છે</string>
     <string name="show_higher_resolutions_title">ઉચ્ચ રીઝોલ્યુશન બતાવો</string>
@@ -40,7 +40,7 @@
     <string name="controls_background_title">પૃષ્ઠભૂમિ</string>
     <string name="tab_choose">ટેબ પસંદ કરો</string>
     <string name="tab_bookmarks">બુકમાર્ક કરેલ પ્લેલિસ્ટ્સ</string>
-    <string name="tab_subscriptions">સબ્સ્ક્રિપ્શન્સ</string>
+    <string name="tab_subscriptions">લવાજમઓ</string>
     <string name="show_info">માહિતી બતાવો</string>
     <string name="subscription_update_failed">સબ્સ્ક્રિપ્શન અપડેટ કરી શકાયું નથી</string>
     <string name="subscription_change_failed">સબ્સ્ક્રિપ્શન બદલી શકાયું નહીં</string>
@@ -53,7 +53,7 @@
     <string name="use_external_video_player_title">બાહ્ય વિડિઓ પ્લેયરનો ઉપયોગ કરો</string>
     <string name="share_dialog_title">સાથે શેર કરો</string>
     <string name="search_showing_result_for">%s માટે પરિણામો બતાવી રહ્યું છે</string>
-    <string name="did_you_mean">શું તમારો મતલબ %1$s છે\?</string>
+    <string name="did_you_mean">શું તમારો મતલબ %1$s છે?</string>
     <string name="settings">સેટિંગ્સ</string>
     <string name="search">શોધો</string>
     <string name="controls_download_desc">સ્ટ્રીમ ફાઇલ ડાઉનલોડ કરો</string>
@@ -65,20 +65,22 @@
     <string name="cancel">રદ કરો</string>
     <string name="install">સ્થાપિત કરો</string>
     <string name="no_player_found_toast">કોઈ સ્ટ્રીમ પ્લેયર મળ્યો નથી (તમે તેને ચલાવવા માટે VLC ઇન્સ્ટોલ કરી શકો છો).</string>
-    <string name="no_player_found">કોઈ સ્ટ્રીમ પ્લેયર મળ્યો નથી. વીએલસી સ્થાપિત કરીએ\?</string>
+    <string name="no_player_found">કોઈ સ્ટ્રીમ પ્લેયર મળ્યો નથી. વીએલસી સ્થાપિત કરીએ?</string>
     <string name="upload_date_text">%1$s પર પ્રકાશિત</string>
     <string name="main_bg_subtitle">પ્રારંભ કરવા માટે વિપુલ - દર્શક કાચને ટેપ કરો.</string>
     <string name="mark_as_watched">જોયેલું તરીકે ચિહ્નિત કરો</string>
     <string name="ok">ઠીક છે</string>
     <string name="yes">હા</string>
     <string name="no">ના</string>
-    <string name="trending">વલણમાં છે</string>
+    <string name="trending">વલણમાંનાં</string>
     <string name="auto_queue_toggle">આપોઆપ કતારબદ્ધતા</string>
     <string name="crash_the_player">પ્લેયરને ક્રેશ કરો</string>
     <string name="action_history">ઇતિહાસ</string>
     <string name="play_with_kodi_title">કોટિથી ચલાવો</string>
-    <string name="show_play_with_kodi_title">કોટિથી ચલાવવાનો વિકલ્પ દેખાટો</string>
+    <string name="show_play_with_kodi_title">કોડિથી ચલાવવાનો વિકલ્પ દેખાડો</string>
     <string name="download_dialog_title">ડાઉનલોડ કરો</string>
     <string name="autoplay_title">આપમેળે ચલાવો</string>
     <string name="fragment_feed_title">નવું શું છે</string>
+    <string name="downloads">ડાઉનલોડ્સ</string>
+    <string name="downloads_title">ડાઉનલોડ્સ</string>
 </resources>

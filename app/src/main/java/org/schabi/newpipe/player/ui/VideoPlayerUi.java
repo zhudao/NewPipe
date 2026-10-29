@@ -23,11 +23,11 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.HapticFeedbackConstants;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -66,7 +66,9 @@ import org.schabi.newpipe.databinding.PlayerBinding;
 import org.schabi.newpipe.extractor.MediaFormat;
 import org.schabi.newpipe.extractor.stream.AudioStream;
 import org.schabi.newpipe.extractor.stream.StreamInfo;
+import org.schabi.newpipe.extractor.stream.StreamSegment;
 import org.schabi.newpipe.extractor.stream.VideoStream;
+import org.schabi.newpipe.views.ChaptersSeekBar;
 import org.schabi.newpipe.fragments.detail.VideoDetailFragment;
 import org.schabi.newpipe.ktx.AnimationType;
 import org.schabi.newpipe.player.Player;
@@ -86,6 +88,7 @@ import org.schabi.newpipe.util.external_communication.KoreUtils;
 import org.schabi.newpipe.util.external_communication.ShareUtils;
 import org.schabi.newpipe.views.player.PlayerFastSeekOverlay;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -147,6 +150,11 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
     @NonNull
     private final SeekbarPreviewThumbnailHolder seekbarPreviewThumbnailHolder =
             new SeekbarPreviewThumbnailHolder();
+
+    @NonNull
+    private List<StreamSegment> currentChapters = Collections.emptyList();
+    @Nullable
+    private StreamSegment lastChapterForHaptic = null;
 
 
     /*//////////////////////////////////////////////////////////////////////////
@@ -400,6 +408,10 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
 
         // #6825 - Ensure that the shuffle-button is in the correct state on the UI
         setShuffleButton(player.getExoPlayer().getShuffleModeEnabled());
+
+        // Set repeat button to the correct UI state
+        setRepeatButton(player.getExoPlayer().getRepeatMode());
+
     }
 
     public abstract void removeViewFromParent();
@@ -586,6 +598,18 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
                         binding.currentSeekbarPreviewThumbnail,
                         binding.subtitleView::getWidth);
 
+        // Chapter title tooltip + haptic feedback at chapter boundaries
+        if (!currentChapters.isEmpty()) {
+            final StreamSegment chapter = getChapterAtMs(progress);
+            if (chapter != null && chapter.getTitle() != null) {
+                binding.currentChapterTitle.setText(chapter.getTitle());
+            }
+            if (chapter != lastChapterForHaptic) {
+                lastChapterForHaptic = chapter;
+                seekBar.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK);
+            }
+        }
+
         adjustSeekbarPreviewContainer();
     }
 
@@ -639,6 +663,10 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
                 AnimationType.SCALE_AND_ALPHA);
         animate(binding.currentSeekbarPreviewThumbnail, true, DEFAULT_CONTROLS_DURATION,
                 AnimationType.SCALE_AND_ALPHA);
+        if (!currentChapters.isEmpty()) {
+            animate(binding.currentChapterTitle, true, DEFAULT_CONTROLS_DURATION,
+                    AnimationType.SCALE_AND_ALPHA);
+        }
     }
 
     @Override // seekbar listener
@@ -655,6 +683,7 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
         binding.playbackCurrentTime.setText(getTimeString(seekBar.getProgress()));
         animate(binding.currentDisplaySeek, false, 200, AnimationType.SCALE_AND_ALPHA);
         animate(binding.currentSeekbarPreviewThumbnail, false, 200, AnimationType.SCALE_AND_ALPHA);
+        animate(binding.currentChapterTitle, false, 200, AnimationType.SCALE_AND_ALPHA);
 
         if (player.getCurrentState() == STATE_PAUSED_SEEK) {
             player.changeState(STATE_BUFFERING);
@@ -664,6 +693,25 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
         }
 
         showControlsThenHide();
+    }
+
+    /**
+     * Returns the chapter active at the given playback position, or {@code null} if
+     * {@code currentChapters} is empty.
+     *
+     * @param positionMs playback position in milliseconds
+     * @return the {@link StreamSegment} whose window contains {@code positionMs}
+     */
+    @Nullable
+    private StreamSegment getChapterAtMs(final long positionMs) {
+        StreamSegment result = null;
+        for (final StreamSegment seg : currentChapters) {
+            if (seg.getStartTimeSeconds() * 1000L > positionMs) {
+                break;
+            }
+            result = seg;
+        }
+        return result;
     }
     //endregion
 
@@ -762,7 +810,7 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
 
     /**
      * Update the play/pause button ({@link R.id.playPauseButton}) to reflect the action
-     * that will be performed when the button is clicked..
+     * that will be performed when the button is clicked.
      * @param action the action that is performed when the play/pause button is clicked
      */
     private void updatePlayPauseButton(final PlayButtonAction action) {
@@ -983,6 +1031,18 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
     private void setShuffleButton(final boolean shuffled) {
         binding.shuffleButton.setImageAlpha(shuffled ? 255 : 77);
     }
+
+    private void setRepeatButton(final int repeatMode) {
+        final int resId = switch (repeatMode) {
+            case REPEAT_MODE_ALL
+                    -> com.google.android.exoplayer2.ui.R.drawable.exo_controls_repeat_all;
+            case REPEAT_MODE_ONE
+                    -> com.google.android.exoplayer2.ui.R.drawable.exo_controls_repeat_one;
+            default -> com.google.android.exoplayer2.ui.R.drawable.exo_controls_repeat_off;
+        };
+        binding.repeatButton.setImageResource(resId);
+    }
+
     //endregion
 
 
@@ -1021,6 +1081,14 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
         binding.channelTextView.setText(info.getUploaderName());
 
         this.seekbarPreviewThumbnailHolder.resetFrom(player.getContext(), info.getPreviewFrames());
+
+        // Chapter markers on seekbar
+        currentChapters = info.getStreamSegments() != null
+                ? info.getStreamSegments() : Collections.emptyList();
+        lastChapterForHaptic = null;
+        ((ChaptersSeekBar) binding.playbackSeekBar)
+                .setChapters(currentChapters, info.getDuration());
+        binding.currentChapterTitle.setVisibility(View.GONE);
     }
 
     private void updateStreamRelatedViews() {
@@ -1554,6 +1622,11 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
     @Override
     public void onVideoSizeChanged(@NonNull final VideoSize videoSize) {
         super.onVideoSizeChanged(videoSize);
+        // Starting with ExoPlayer 2.19.0, the VideoSize will report a width and height of 0
+        // if the renderer is disabled. In that case, we skip updating the aspect ratio.
+        if (videoSize.width == 0 || videoSize.height == 0) {
+            return;
+        }
         binding.surfaceView.setAspectRatio(((float) videoSize.width) / videoSize.height);
     }
     //endregion
@@ -1579,19 +1652,15 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
             // make sure there is nothing left over from previous calls
             clearVideoSurface();
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // >=API23
-                surfaceHolderCallback = new SurfaceHolderCallback(context, player.getExoPlayer());
-                binding.surfaceView.getHolder().addCallback(surfaceHolderCallback);
+            surfaceHolderCallback = new SurfaceHolderCallback(context, player.getExoPlayer());
+            binding.surfaceView.getHolder().addCallback(surfaceHolderCallback);
 
-                // ensure player is using an unreleased surface, which the surfaceView might not be
-                // when starting playback on background or during player switching
-                if (binding.surfaceView.getHolder().getSurface().isValid()) {
-                    // initially set the surface manually otherwise
-                    // onRenderedFirstFrame() will not be called
-                    player.getExoPlayer().setVideoSurfaceHolder(binding.surfaceView.getHolder());
-                }
-            } else {
-                player.getExoPlayer().setVideoSurfaceView(binding.surfaceView);
+            // ensure player is using an unreleased surface, which the surfaceView might not be
+            // when starting playback on background or during player switching
+            if (binding.surfaceView.getHolder().getSurface().isValid()) {
+                // initially set the surface manually otherwise
+                // onRenderedFirstFrame() will not be called
+                player.getExoPlayer().setVideoSurfaceHolder(binding.surfaceView.getHolder());
             }
 
             surfaceIsSetup = true;
@@ -1599,8 +1668,7 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
     }
 
     private void clearVideoSurface() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M // >=API23
-                && surfaceHolderCallback != null) {
+        if (surfaceHolderCallback != null) {
             binding.surfaceView.getHolder().removeCallback(surfaceHolderCallback);
             surfaceHolderCallback.release();
             surfaceHolderCallback = null;

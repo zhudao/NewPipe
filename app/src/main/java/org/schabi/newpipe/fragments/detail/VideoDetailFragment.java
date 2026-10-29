@@ -93,6 +93,7 @@ import org.schabi.newpipe.local.dialog.PlaylistDialog;
 import org.schabi.newpipe.local.history.HistoryRecordManager;
 import org.schabi.newpipe.local.playlist.LocalPlaylistFragment;
 import org.schabi.newpipe.player.Player;
+import org.schabi.newpipe.player.PlayerIntentType;
 import org.schabi.newpipe.player.PlayerService;
 import org.schabi.newpipe.player.PlayerType;
 import org.schabi.newpipe.player.event.OnKeyDownListener;
@@ -117,7 +118,7 @@ import org.schabi.newpipe.util.StreamTypeUtil;
 import org.schabi.newpipe.util.ThemeHelper;
 import org.schabi.newpipe.util.external_communication.KoreUtils;
 import org.schabi.newpipe.util.external_communication.ShareUtils;
-import org.schabi.newpipe.util.image.PicassoHelper;
+import org.schabi.newpipe.util.image.CoilHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -128,6 +129,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
+import coil3.util.CoilUtils;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -158,8 +160,6 @@ public final class VideoDetailFragment
     private static final String RELATED_TAB_TAG = "NEXT VIDEO";
     private static final String DESCRIPTION_TAB_TAG = "DESCRIPTION TAB";
     private static final String EMPTY_TAB_TAG = "EMPTY TAB";
-
-    private static final String PICASSO_VIDEO_DETAILS_TAG = "PICASSO_VIDEO_DETAILS_TAG";
 
     // tabs
     private boolean showComments;
@@ -205,6 +205,7 @@ public final class VideoDetailFragment
     int lastStableBottomSheetState = BottomSheetBehavior.STATE_EXPANDED;
     @State
     protected boolean autoPlayEnabled = true;
+    private boolean forceFullscreen = false;
 
     @Nullable
     private StreamInfo currentInfo = null;
@@ -236,11 +237,14 @@ public final class VideoDetailFragment
     // Service management
     //////////////////////////////////////////////////////////////////////////*/
     @Override
-    public void onServiceConnected(final Player connectedPlayer,
-                                   final PlayerService connectedPlayerService,
-                                   final boolean playAfterConnect) {
-        player = connectedPlayer;
+    public void onServiceConnected(@NonNull final PlayerService connectedPlayerService) {
         playerService = connectedPlayerService;
+    }
+
+    @Override
+    public void onPlayerConnected(@NonNull final Player connectedPlayer,
+                                  final boolean playAfterConnect) {
+        player = connectedPlayer;
 
         // It will do nothing if the player is not in fullscreen mode
         hideSystemUiIfNeeded();
@@ -273,10 +277,17 @@ public final class VideoDetailFragment
     }
 
     @Override
+    public void onPlayerDisconnected() {
+        player = null;
+        // the binding could be null at this point, if the app is finishing
+        if (binding != null) {
+            restoreDefaultBrightness();
+        }
+    }
+
+    @Override
     public void onServiceDisconnected() {
         playerService = null;
-        player = null;
-        restoreDefaultBrightness();
     }
 
 
@@ -635,6 +646,12 @@ public final class VideoDetailFragment
     protected void initListeners() {
         super.initListeners();
 
+        // Workaround for #5600
+        // Forcefully catch click events uncaught by children because otherwise
+        // they will be caught by underlying view and "click through" will happen
+        binding.getRoot().setOnClickListener(v -> { });
+        binding.getRoot().setOnLongClickListener(v -> true);
+
         setOnClickListeners();
         setOnLongClickListeners();
 
@@ -861,12 +878,12 @@ public final class VideoDetailFragment
                             }
                         }
 
-                        if (isAutoplayEnabled()) {
+                        if (isAutoplayEnabled() || forceFullscreen) {
                             openVideoPlayerAutoFullscreen();
                         }
                     }
                 }, throwable -> showError(new ErrorInfo(throwable, UserAction.REQUESTED_STREAM,
-                        url == null ? "no url" : url, serviceId)));
+                        url == null ? "no url" : url, serviceId, url)));
     }
 
     /*//////////////////////////////////////////////////////////////////////////
@@ -1118,15 +1135,29 @@ public final class VideoDetailFragment
     }
 
     /**
-     * If the option to start directly fullscreen is enabled, calls
-     * {@link #openVideoPlayer(boolean)} with {@code directlyFullscreenIfApplicable = true}, so that
-     * if the user is not already in landscape and he has screen orientation locked the activity
-     * rotates and fullscreen starts. Otherwise, if the option to start directly fullscreen is
-     * disabled, calls {@link #openVideoPlayer(boolean)} with {@code directlyFullscreenIfApplicable
-     * = false}, hence preventing it from going directly fullscreen.
+     * If the option to start directly fullscreen is enabled, or if {@code forceFullscreen} is
+     * {@code true} (e.g. when switching from popup player to main player with a different video),
+     * calls {@link #openVideoPlayer(boolean)} with {@code directlyFullscreenIfApplicable = true},
+     * so that if the user is not already in landscape and he has screen orientation locked the
+     * activity rotates and fullscreen starts. Otherwise, if the option to start directly fullscreen
+     * is disabled and {@code forceFullscreen} is {@code false}, calls
+     * {@link #openVideoPlayer(boolean)} with {@code directlyFullscreenIfApplicable = false},
+     * hence preventing it from going directly fullscreen.
+     * {@code forceFullscreen} is reset to {@code false} after this call.
      */
     public void openVideoPlayerAutoFullscreen() {
-        openVideoPlayer(PlayerHelper.isStartMainPlayerFullscreenEnabled(requireContext()));
+        openVideoPlayer(forceFullscreen
+                || PlayerHelper.isStartMainPlayerFullscreenEnabled(requireContext()));
+        forceFullscreen = false;
+    }
+
+    public void setForceFullscreen(final boolean force) {
+        this.forceFullscreen = force;
+    }
+
+    @Nullable
+    public String getUrl() {
+        return url;
     }
 
     private void openNormalBackgroundPlayer(final boolean append) {
@@ -1156,8 +1187,12 @@ public final class VideoDetailFragment
         final PlayQueue queue = setupPlayQueueForIntent(false);
         tryAddVideoPlayerView();
 
-        final Intent playerIntent = NavigationHelper.getPlayerIntent(requireContext(),
-                PlayerService.class, queue, true, autoPlayEnabled);
+        final Context context = requireContext();
+        final Intent playerIntent =
+                NavigationHelper.getPlayerIntent(context, PlayerService.class, queue,
+                                PlayerIntentType.AllOthers)
+                        .putExtra(Player.PLAY_WHEN_READY, autoPlayEnabled)
+                        .putExtra(Player.RESUME_PLAYBACK, true);
         ContextCompat.startForegroundService(activity, playerIntent);
     }
 
@@ -1215,7 +1250,13 @@ public final class VideoDetailFragment
         disposables.add(recordManager.onViewed(info).onErrorComplete()
                 .subscribe(
                         ignored -> { /* successful */ },
-                        error -> Log.e(TAG, "Register view failure: ", error)
+                        error -> showSnackBarError(
+                                new ErrorInfo(
+                                        error,
+                                        UserAction.PLAY_STREAM,
+                                        "Got an error when modifying history on viewed"
+                                )
+                        )
                 ));
     }
 
@@ -1254,9 +1295,15 @@ public final class VideoDetailFragment
             player.UIs().get(MainPlayerUi.class).ifPresent(playerUi -> {
                 // sometimes binding would be null here, even though getView() != null above u.u
                 if (binding != null) {
-                    // prevent from re-adding a view multiple times
-                    playerUi.removeViewFromParent();
-                    binding.playerPlaceholder.addView(playerUi.getBinding().getRoot());
+                    // Only reparent the view if it's not already in the playerPlaceholder.
+                    // Removing and re-adding a SurfaceView destroys its native surface,
+                    // causing a black screen until the video decoder hits the next
+                    // keyframe (2-5 seconds on typical DASH/HLS streams).
+                    if (playerUi.getBinding().getRoot().getParent()
+                            != binding.playerPlaceholder) {
+                        playerUi.removeViewFromParent();
+                        binding.playerPlaceholder.addView(playerUi.getBinding().getRoot());
+                    }
                     playerUi.setupVideoSurfaceIfNeeded();
                 }
             });
@@ -1413,7 +1460,8 @@ public final class VideoDetailFragment
         intentFilter.addAction(ACTION_SHOW_MAIN_PLAYER);
         intentFilter.addAction(ACTION_HIDE_MAIN_PLAYER);
         intentFilter.addAction(ACTION_PLAYER_STARTED);
-        activity.registerReceiver(broadcastReceiver, intentFilter);
+        ContextCompat.registerReceiver(activity, broadcastReceiver, intentFilter,
+                ContextCompat.RECEIVER_EXPORTED);
     }
 
 
@@ -1471,7 +1519,10 @@ public final class VideoDetailFragment
             }
         }
 
-        PicassoHelper.cancelTag(PICASSO_VIDEO_DETAILS_TAG);
+        CoilUtils.dispose(binding.detailThumbnailImageView);
+        CoilUtils.dispose(binding.detailSubChannelThumbnailView);
+        CoilUtils.dispose(binding.overlayThumbnail);
+        CoilUtils.dispose(binding.detailUploaderThumbnailView);
         binding.detailThumbnailImageView.setImageBitmap(null);
         binding.detailSubChannelThumbnailView.setImageBitmap(null);
     }
@@ -1562,8 +1613,8 @@ public final class VideoDetailFragment
         binding.detailSecondaryControlPanel.setVisibility(View.GONE);
 
         checkUpdateProgressInfo(info);
-        PicassoHelper.loadDetailsThumbnail(info.getThumbnails()).tag(PICASSO_VIDEO_DETAILS_TAG)
-                .into(binding.detailThumbnailImageView);
+        CoilHelper.INSTANCE.loadDetailsThumbnail(binding.detailThumbnailImageView,
+                info.getThumbnails());
         showMetaInfoInTextView(info.getMetaInfo(), binding.detailMetaInfoTextView,
                 binding.detailMetaInfoSeparator, disposables);
 
@@ -1582,8 +1633,8 @@ public final class VideoDetailFragment
             }
 
             if (!info.getErrors().isEmpty()) {
-                showSnackBarError(new ErrorInfo(info.getErrors(),
-                        UserAction.REQUESTED_STREAM, info.getUrl(), info));
+                showSnackBarError(new ErrorInfo(info.getErrors(), UserAction.REQUESTED_STREAM,
+                        "Some info not extracted: " + info.getUrl(), info));
             }
         }
 
@@ -1613,8 +1664,8 @@ public final class VideoDetailFragment
             binding.detailUploaderTextView.setVisibility(View.GONE);
         }
 
-        PicassoHelper.loadAvatar(info.getUploaderAvatars()).tag(PICASSO_VIDEO_DETAILS_TAG)
-                .into(binding.detailSubChannelThumbnailView);
+        CoilHelper.INSTANCE.loadAvatar(binding.detailSubChannelThumbnailView,
+                info.getUploaderAvatars());
         binding.detailSubChannelThumbnailView.setVisibility(View.VISIBLE);
         binding.detailUploaderThumbnailView.setVisibility(View.GONE);
     }
@@ -1645,11 +1696,11 @@ public final class VideoDetailFragment
             binding.detailUploaderTextView.setVisibility(View.GONE);
         }
 
-        PicassoHelper.loadAvatar(info.getSubChannelAvatars()).tag(PICASSO_VIDEO_DETAILS_TAG)
-                .into(binding.detailSubChannelThumbnailView);
+        CoilHelper.INSTANCE.loadAvatar(binding.detailSubChannelThumbnailView,
+                info.getSubChannelAvatars());
         binding.detailSubChannelThumbnailView.setVisibility(View.VISIBLE);
-        PicassoHelper.loadAvatar(info.getUploaderAvatars()).tag(PICASSO_VIDEO_DETAILS_TAG)
-                .into(binding.detailUploaderThumbnailView);
+        CoilHelper.INSTANCE.loadAvatar(binding.detailUploaderThumbnailView,
+                info.getUploaderAvatars());
         binding.detailUploaderThumbnailView.setVisibility(View.VISIBLE);
     }
 
@@ -1848,13 +1899,16 @@ public final class VideoDetailFragment
 
     @Override
     public void onServiceStopped() {
-        setOverlayPlayPauseImage(false);
-        if (currentInfo != null) {
-            updateOverlayData(currentInfo.getName(),
-                    currentInfo.getUploaderName(),
-                    currentInfo.getThumbnails());
+        // the binding could be null at this point, if the app is finishing
+        if (binding != null) {
+            setOverlayPlayPauseImage(false);
+            if (currentInfo != null) {
+                updateOverlayData(currentInfo.getName(),
+                        currentInfo.getUploaderName(),
+                        currentInfo.getThumbnails());
+            }
+            updateOverlayPlayQueueButtonVisibility();
         }
-        updateOverlayPlayQueueButtonVisibility();
     }
 
     @Override
@@ -1874,7 +1928,11 @@ public final class VideoDetailFragment
         }
 
         if (binding.relatedItemsLayout != null) {
-            binding.relatedItemsLayout.setVisibility(fullscreen ? View.GONE : View.VISIBLE);
+            if (showRelatedItems) {
+                binding.relatedItemsLayout.setVisibility(fullscreen ? View.GONE : View.VISIBLE);
+            } else {
+                binding.relatedItemsLayout.setVisibility(View.GONE);
+            }
         }
         scrollToTop();
 
@@ -1883,12 +1941,13 @@ public final class VideoDetailFragment
 
     @Override
     public void onScreenRotationButtonClicked() {
+        // On Android TV screen rotation is not supported
         // In tablet user experience will be better if screen will not be rotated
         // from landscape to portrait every time.
         // Just turn on fullscreen mode in landscape orientation
         // or portrait & unlocked global orientation
         final boolean isLandscape = DeviceUtils.isLandscape(requireContext());
-        if (DeviceUtils.isTablet(activity)
+        if (DeviceUtils.isTv(activity) || DeviceUtils.isTablet(activity)
                 && (!globalScreenOrientationLocked(activity) || isLandscape)) {
             player.UIs().get(MainPlayerUi.class).ifPresent(MainPlayerUi::toggleFullscreen);
             return;
@@ -2403,8 +2462,7 @@ public final class VideoDetailFragment
         binding.overlayTitleTextView.setText(isEmpty(overlayTitle) ? "" : overlayTitle);
         binding.overlayChannelTextView.setText(isEmpty(uploader) ? "" : uploader);
         binding.overlayThumbnail.setImageDrawable(null);
-        PicassoHelper.loadDetailsThumbnail(thumbnails).tag(PICASSO_VIDEO_DETAILS_TAG)
-                .into(binding.overlayThumbnail);
+        CoilHelper.INSTANCE.loadDetailsThumbnail(binding.overlayThumbnail, thumbnails);
     }
 
     private void setOverlayPlayPauseImage(final boolean playerIsPlaying) {

@@ -10,12 +10,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
+import android.text.Layout;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.style.AlignmentSpan;
 import android.text.style.CharacterStyle;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -36,6 +43,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.collection.SparseArrayCompat;
 import androidx.core.text.HtmlCompat;
+import androidx.core.view.SoftwareKeyboardControllerCompat;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,6 +62,7 @@ import org.schabi.newpipe.extractor.MetaInfo;
 import org.schabi.newpipe.extractor.NewPipe;
 import org.schabi.newpipe.extractor.Page;
 import org.schabi.newpipe.extractor.StreamingService;
+import org.schabi.newpipe.extractor.exceptions.ParsingException;
 import org.schabi.newpipe.extractor.search.SearchExtractor;
 import org.schabi.newpipe.extractor.search.SearchInfo;
 import org.schabi.newpipe.extractor.services.peertube.linkHandler.PeertubeSearchQueryHandlerFactory;
@@ -67,7 +76,6 @@ import org.schabi.newpipe.settings.NewPipeSettings;
 import org.schabi.newpipe.util.Constants;
 import org.schabi.newpipe.util.DeviceUtils;
 import org.schabi.newpipe.util.ExtractorHelper;
-import org.schabi.newpipe.util.KeyboardUtil;
 import org.schabi.newpipe.util.NavigationHelper;
 import org.schabi.newpipe.util.ServiceHelper;
 
@@ -144,6 +152,7 @@ public class SearchFragment extends BaseListFragment<SearchInfo, ListExtractor.I
 
     private final SparseArrayCompat<String> menuItemToFilterName = new SparseArrayCompat<>();
     private StreamingService service;
+    @Nullable
     private Page nextPage;
     private boolean showLocalSuggestions = true;
     private boolean showRemoteSuggestions = true;
@@ -219,6 +228,15 @@ public class SearchFragment extends BaseListFragment<SearchInfo, ListExtractor.I
     public void onViewCreated(@NonNull final View rootView, final Bundle savedInstanceState) {
         searchBinding = FragmentSearchBinding.bind(rootView);
         super.onViewCreated(rootView, savedInstanceState);
+
+        updateService();
+        // Add the service name to search string hint
+        // to make it more obvious which platform is being searched.
+        if (service != null) {
+            searchEditText.setHint(
+                    getString(R.string.search_with_service_name,
+                            service.getServiceInfo().getName()));
+        }
         showSearchOnStart();
         initSearchListeners();
     }
@@ -442,22 +460,28 @@ public class SearchFragment extends BaseListFragment<SearchInfo, ListExtractor.I
 
         for (final String filter : service.getSearchQHFactory().getAvailableContentFilter()) {
             if (filter.equals(YoutubeSearchQueryHandlerFactory.MUSIC_SONGS)) {
-                final MenuItem musicItem = menu.add(2,
+                menu.add(2,
                         itemId++,
                         0,
-                        "YouTube Music");
-                musicItem.setEnabled(false);
+                        getStyledHeader("YouTube"));
+                menu.add(2,
+                        itemId++,
+                        1,
+                        getStyledHeader("YouTube Music"));
             } else if (filter.equals(PeertubeSearchQueryHandlerFactory.SEPIA_VIDEOS)) {
-                final MenuItem sepiaItem = menu.add(2,
+                menu.add(2,
                         itemId++,
                         0,
-                        "Sepia Search");
-                sepiaItem.setEnabled(false);
+                        getStyledHeader("Search"));
+                menu.add(2,
+                        itemId++,
+                        1,
+                        getStyledHeader("Sepia Search"));
             }
             menuItemToFilterName.put(itemId, filter);
             final MenuItem item = menu.add(1,
                     itemId++,
-                    0,
+                    1,
                     ServiceHelper.getTranslatedFilterString(filter, c));
             if (isFirstItem) {
                 item.setChecked(true);
@@ -467,6 +491,15 @@ public class SearchFragment extends BaseListFragment<SearchInfo, ListExtractor.I
         menu.setGroupCheckable(1, true, true);
 
         restoreFilterChecked(menu, filterItemCheckedId);
+    }
+
+    private SpannableString getStyledHeader(final String title) {
+        final SpannableString styledTitle = new SpannableString(title);
+        styledTitle.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), 0);
+        styledTitle.setSpan(new ForegroundColorSpan(Color.GRAY), 0, title.length(), 0);
+        styledTitle.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER),
+                0, title.length(), 0);
+        return styledTitle;
     }
 
     @Override
@@ -672,15 +705,15 @@ public class SearchFragment extends BaseListFragment<SearchInfo, ListExtractor.I
         if (DEBUG) {
             Log.d(TAG, "showKeyboardSearch() called");
         }
-        KeyboardUtil.showKeyboard(activity, searchEditText);
+        new SoftwareKeyboardControllerCompat(searchEditText).show();
     }
 
     private void hideKeyboardSearch() {
         if (DEBUG) {
             Log.d(TAG, "hideKeyboardSearch() called");
         }
-
-        KeyboardUtil.hideKeyboard(activity, searchEditText);
+        new SoftwareKeyboardControllerCompat(searchEditText).hide();
+        searchEditText.clearFocus();
     }
 
     private void showDeleteSuggestionDialog(final SuggestionItem item) {
@@ -924,7 +957,21 @@ public class SearchFragment extends BaseListFragment<SearchInfo, ListExtractor.I
             infoListAdapter.clearStreamItemList();
             showEmptyState();
         } else {
-            showError(new ErrorInfo(exception, UserAction.SEARCHED, searchString, serviceId));
+            showError(new ErrorInfo(exception, UserAction.SEARCHED, searchString, serviceId,
+                    getOpenInBrowserUrlForErrors()));
+        }
+    }
+
+    @Nullable
+    private String getOpenInBrowserUrlForErrors() {
+        if (TextUtils.isEmpty(searchString)) {
+            return null;
+        }
+        try {
+            return service.getSearchQHFactory().getUrl(searchString,
+                    Arrays.asList(contentFilter), sortFilter);
+        } catch (final NullPointerException | ParsingException ignored) {
+            return null;
         }
     }
 
@@ -935,6 +982,20 @@ public class SearchFragment extends BaseListFragment<SearchInfo, ListExtractor.I
     private void changeContentFilter(final MenuItem item, final List<String> theContentFilter) {
         filterItemCheckedId = item.getItemId();
         item.setChecked(true);
+
+        if (service != null) {
+            final boolean isNotFiltered = theContentFilter.isEmpty()
+                    || "all".equals(theContentFilter.get(0));
+            if (isNotFiltered) {
+                searchEditText.setHint(
+                        getString(R.string.search_with_service_name,
+                                service.getServiceInfo().getName()));
+            } else {
+                searchEditText.setHint(getString(R.string.search_with_service_name_and_filter,
+                        service.getServiceInfo().getName(),
+                        item.getTitle()));
+            }
+        }
 
         contentFilter = theContentFilter.toArray(new String[0]);
 
@@ -970,7 +1031,11 @@ public class SearchFragment extends BaseListFragment<SearchInfo, ListExtractor.I
             Log.d(TAG, "handleSuggestions() called with: suggestions = [" + suggestions + "]");
         }
         suggestionListAdapter.submitList(suggestions,
-                () -> searchBinding.suggestionsList.scrollToPosition(0));
+                () -> {
+                    if (searchBinding != null) {
+                        searchBinding.suggestionsList.scrollToPosition(0);
+                    }
+                });
 
         if (suggestionsPanelVisible && isErrorPanelVisible()) {
             hideLoading();
@@ -998,7 +1063,7 @@ public class SearchFragment extends BaseListFragment<SearchInfo, ListExtractor.I
                 && !(exceptions.size() == 1
                 && exceptions.get(0) instanceof SearchExtractor.NothingFoundException)) {
             showSnackBarError(new ErrorInfo(result.getErrors(), UserAction.SEARCHED,
-                    searchString, serviceId));
+                    searchString, serviceId, getOpenInBrowserUrlForErrors()));
         }
 
         searchSuggestion = result.getSearchSuggestion();
@@ -1065,15 +1130,26 @@ public class SearchFragment extends BaseListFragment<SearchInfo, ListExtractor.I
     public void handleNextItems(final ListExtractor.InfoItemsPage<?> result) {
         showListFooter(false);
         infoListAdapter.addInfoItemList(result.getItems());
-        nextPage = result.getNextPage();
 
         if (!result.getErrors().isEmpty()) {
-            showSnackBarError(new ErrorInfo(result.getErrors(), UserAction.SEARCHED,
-                    "\"" + searchString + "\" → pageUrl: " + nextPage.getUrl() + ", "
-                            + "pageIds: " + nextPage.getIds() + ", "
-                            + "pageCookies: " + nextPage.getCookies(),
-                    serviceId));
+            // nextPage should be non-null at this point, because it refers to the page
+            // whose results are handled here, but let's check it anyway
+            if (nextPage == null) {
+                showSnackBarError(new ErrorInfo(result.getErrors(), UserAction.SEARCHED,
+                        "\"" + searchString + "\" → nextPage == null", serviceId,
+                        getOpenInBrowserUrlForErrors()));
+            } else {
+                showSnackBarError(new ErrorInfo(result.getErrors(), UserAction.SEARCHED,
+                        "\"" + searchString + "\" → pageUrl: " + nextPage.getUrl() + ", "
+                                + "pageIds: " + nextPage.getIds() + ", "
+                                + "pageCookies: " + nextPage.getCookies(),
+                        serviceId, getOpenInBrowserUrlForErrors()));
+            }
         }
+
+        // keep the reassignment of nextPage after the error handling to ensure that nextPage
+        // still holds the correct value during the error handling
+        nextPage = result.getNextPage();
         super.handleNextItems(result);
     }
 

@@ -58,7 +58,7 @@ public final class ListHelper {
     /**
      * List of supported YouTube Itag ids.
      * The original order is kept.
-     * @see {@link org.schabi.newpipe.extractor.services.youtube.ItagItem#ITAG_LIST}
+     * @see org.schabi.newpipe.extractor.services.youtube.ItagItem
      */
     private static final List<Integer> SUPPORTED_ITAG_IDS =
             List.of(
@@ -322,7 +322,7 @@ public final class ListHelper {
         }
 
         // Sort collected streams by name
-        return collectedStreams.values().stream().sorted(getAudioTrackNameComparator(context))
+        return collectedStreams.values().stream().sorted(getAudioTrackNameComparator())
                 .collect(Collectors.toList());
     }
 
@@ -359,7 +359,7 @@ public final class ListHelper {
         }
 
         // Sort tracks alphabetically, sort track streams by quality
-        final Comparator<AudioStream> nameCmp = getAudioTrackNameComparator(context);
+        final Comparator<AudioStream> nameCmp = getAudioTrackNameComparator();
         final Comparator<AudioStream> formatCmp = getAudioFormatComparator(context);
 
         return collectedStreams.values().stream()
@@ -806,7 +806,7 @@ public final class ListHelper {
         final Locale preferredLanguage = Localization.getPreferredLocale(context);
         final boolean preferOriginalAudio =
                 preferences.getBoolean(context.getString(R.string.prefer_original_audio_key),
-                        false);
+                        true);
         final boolean preferDescriptiveAudio =
                 preferences.getBoolean(context.getString(R.string.prefer_descriptive_audio_key),
                         false);
@@ -867,12 +867,10 @@ public final class ListHelper {
      * Get a {@link Comparator} to compare {@link AudioStream}s by their languages and track types
      * for alphabetical sorting.
      *
-     * @param context app context for localization
      * @return Comparator
      */
-    private static Comparator<AudioStream> getAudioTrackNameComparator(
-            @NonNull final Context context) {
-        final Locale appLoc = Localization.getAppLocale(context);
+    private static Comparator<AudioStream> getAudioTrackNameComparator() {
+        final Locale appLoc = Localization.getAppLocale();
 
         return Comparator.comparing(AudioStream::getAudioLocale, Comparator.nullsLast(
                         Comparator.comparing(locale -> locale.getDisplayName(appLoc))))

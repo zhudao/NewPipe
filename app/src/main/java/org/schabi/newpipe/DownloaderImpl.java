@@ -23,13 +23,16 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import okhttp3.CompressionInterceptor;
+import okhttp3.Gzip;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import okhttp3.brotli.Brotli;
 
 public final class DownloaderImpl extends Downloader {
     public static final String USER_AGENT =
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0";
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:153.0) Gecko/20100101 Firefox/153.0";
     public static final String YOUTUBE_RESTRICTED_MODE_COOKIE_KEY =
             "youtube_restricted_mode_key";
     public static final String YOUTUBE_RESTRICTED_MODE_COOKIE = "PREF=f2=8000000";
@@ -44,8 +47,16 @@ public final class DownloaderImpl extends Downloader {
                 .readTimeout(30, TimeUnit.SECONDS)
 //                .cache(new Cache(new File(context.getExternalCacheDir(), "okhttp"),
 //                        16 * 1024 * 1024))
+                .addInterceptor(new CompressionInterceptor(
+                        Brotli.INSTANCE,
+                        Gzip.INSTANCE))
                 .build();
         this.mCookies = new HashMap<>();
+    }
+
+    @NonNull
+    public OkHttpClient getClient() {
+        return client;
     }
 
     /**
@@ -161,9 +172,7 @@ public final class DownloaderImpl extends Downloader {
 
             String responseBodyToReturn = null;
             try (ResponseBody body = response.body()) {
-                if (body != null) {
-                    responseBodyToReturn = body.string();
-                }
+                responseBodyToReturn = body.string();
             }
 
             final String latestUrl = response.request().url().toString();

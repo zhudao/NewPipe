@@ -3,6 +3,19 @@
 NewPipe contribution guidelines
 ===============================
 
+## AI policy
+
+* Using generative AI to develop new features or making larger code changes is generally prohibited. Please refrain from contributions which are heavily depending on AI generated source code because they are usually lacking a fundamental understanding of the overall project structure and thus come with poor quality. However, you are allowed to use gen. AI if you
+  * are aware of the project structure,
+  * ensure that the generated code follows the project structure,
+  * fully understand the generated code, and
+  * review the generated code completely.
+* Using AI to find the root cause of bugs and generating small fixes might be acceptable. However, gen. AI often does not fix the underlying problem but is trying to fix the symptoms. If you are using AI to fix bugs, ensure that the root cause is tackled.
+* The use of AI to generate documentation is allowed. We ask you to thoroughly check the quality of generated documentation – wrong, misleading or uninformative documentation is useless and wastes the reader's time. Ensure that reasoning is documented.
+* Using generative AI to write or fill in PR or issue templates is prohibited. Those texts are often lengthy and miss critical information.
+* PRs and issues that do not follow this AI policy can be closed without further explanation.
+
+
 ## Crash reporting
 
 Report crashes through the **automated crash report system** of NewPipe.
@@ -36,7 +49,7 @@ You'll see *exactly* what is sent, be able to add **your comments**, and then se
 
 ### Before starting development
 
-* If you want to help out with an existing bug report or feature request, **leave a comment** on that issue saying you want to try your hand at it.
+* If you want to help out with an existing bug report or feature request, **leave a comment** on that issue saying you want to try your hand at it. Please wait for a response from the maintainers before starting development. This prevents multiple people from working on the same issue at the same time, which can lead to wasted effort and frustration. PRs that do not reference an existing issue which is **assigned** to you might be closed without further explanation.
 * If there is no existing issue for what you want to work on, **open a new one**  describing the changes you are planning to introduce. This gives the team and the community a chance to give **feedback** before you spend time on something that is already in development, should be done differently, or should be avoided completely.
 * Please show **intention to maintain your features** and code after you contribute a PR. Unmaintained code is a hassle for core developers. If you do not intend to maintain features you plan to contribute, please rethink your submission, or clearly state that in the PR description.
 * Create PRs that cover only **one specific issue/solution/bug**. Do not create PRs that are huge monoliths and could have been split into multiple independent contributions.
@@ -44,8 +57,9 @@ You'll see *exactly* what is sent, be able to add **your comments**, and then se
 
 ### Creating a Pull Request (PR)
 
-* Make changes on a **separate branch** with a meaningful name, not on the _master_ branch or the _dev_ branch. This is commonly known as *feature branch workflow*. You may then send your changes as a pull request (PR) on GitHub.
+* Make changes on a **separate branch** with a meaningful name, not on the _master_ branch or the _dev_ branch. This is commonly known as *feature branch workflow*. You may then send your changes as a pull request (PR) on GitHub against the `dev` branch.
 * Please **test** (compile and run) your code before submitting changes! Ideally, provide test feedback in the PR description. Untested code will **not** be merged!
+* Filling in the **PR template** is mandatory. Ignoring the template or removing it can get your PR closed without further explanation.
 * Respond if someone requests changes or otherwise raises issues about your PRs.
 * Try to figure out yourself why builds on our CI fail.
 * Make sure your PR is **up-to-date** with the rest of the code. Often, a simple click on "Update branch" will do the job, but if not, you must *rebase* your branch on the `dev` branch manually and resolve the conflicts on your own. You can find help [on the wiki](https://github.com/TeamNewPipe/NewPipe/wiki/How-to-merge-a-PR). Doing this makes the maintainers' job way easier.
