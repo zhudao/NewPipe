@@ -13,8 +13,10 @@ import net.newpipe.app.screen.settings.ContentSettingsScreen
 import net.newpipe.app.screen.settings.DebugSettingsScreen
 import net.newpipe.app.screen.settings.DownloadSettingsScreen
 import net.newpipe.app.screen.settings.HistorySettingsScreen
+import net.newpipe.app.screen.settings.NotificationSettingsScreen
 import net.newpipe.app.screen.settings.PlayerSettingsScreen
 import net.newpipe.app.screen.settings.SettingsHomeScreen
+import net.newpipe.app.screen.settings.UpdateSettingsScreen
 import net.newpipe.app.screen.settings.VideoAudioSettingsScreen
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.annotation.Provided
@@ -66,6 +68,14 @@ fun navModule() = module {
 
     navigation<Destination.ContentSettings> {
         ContentSettingsScreen()
+    }
+
+    navigation<Destination.NotificationSettings> {
+        NotificationSettingsScreen()
+    }
+
+    navigation<Destination.UpdateSettings> {
+        UpdateSettingsScreen()
     }
 }
 
